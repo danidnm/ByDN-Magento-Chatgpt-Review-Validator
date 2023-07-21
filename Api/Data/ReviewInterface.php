@@ -5,12 +5,12 @@ namespace DanielNavarro\ChatGptReviewValidator\Api\Data;
 interface ReviewInterface
 {
     const ID = 'id';
-    const REVIEW_ID = 'review_id';
-    const VALIDATED_AT = 'validated_at';
-    const PROBLEMS = 'problems';
-    const RESULT = 'result';
-    const MANUALLY_VALIDATED = 'manually_validated';
-    const EXCLUDED_FOR_TRAINING = 'excluded_for_training';
+    const GPT_REVIEW_ID = 'gpt_review_id';
+    const GPT_STATUS = 'gpt_status';
+    const GPT_VALIDATED_AT = 'gpt_validated_at';
+    const GPT_RESULT = 'gpt_result';
+    const GPT_PROBLEMS = 'gpt_problems';
+    const GPT_EXCLUDED_FOR_TRAINING = 'gpt_excluded_for_training';
 
     /**
      * @return null|int
@@ -20,60 +20,60 @@ interface ReviewInterface
     /**
      * @return null|int
      */
-    public function getReviewId(): ?int;
+    public function getGptReviewId(): ?int;
 
     /**
      * @return string
      */
-    public function getValidatedAt(): string;
+    public function getGptStatus(): string;
 
     /**
      * @return string
      */
-    public function getProblems(): string;
+    public function getGptValidatedAt(): string;
 
     /**
      * @return string
      */
-    public function getResult(): string;
+    public function getGptResult(): string;
+
+    /**
+     * @return string
+     */
+    public function getGptProblems(): string;
 
     /**
      * @return int|null
      */
-    public function getManuallyValidated(): ?int;
+    public function getGptExcludedForTraining(): ?int;
 
     /**
-     * @return int|null
+     * @param string $status
+     * @return ReviewInterface
      */
-    public function getExcludedForTraining(): ?int;
+    public function setGptStatus(string $status): ReviewInterface;
 
     /**
      * @param string $validatedAt
      * @return ReviewInterface
      */
-    public function setValidatedAt(string $validatedAt): ReviewInterface;
-
-    /**
-     * @param string $problems
-     * @return ReviewInterface
-     */
-    public function setProblems(string $problems): ReviewInterface;
+    public function setGptValidatedAt(string $validatedAt): ReviewInterface;
 
     /**
      * @param string $result
      * @return ReviewInterface
      */
-    public function setResult(string $result): ReviewInterface;
+    public function setGptResult(string $result): ReviewInterface;
 
     /**
-     * @param int $manuallyValidated
+     * @param string $problems
      * @return ReviewInterface
      */
-    public function setManuallyValidated(int $manuallyValidated): ReviewInterface;
+    public function setGptProblems(string $problems): ReviewInterface;
 
     /**
      * @param int $excludedForTraining
      * @return ReviewInterface
      */
-    public function setExcludedForTraining(int $excludedForTraining): ReviewInterface;
+    public function setGptExcludedForTraining(int $excludedForTraining): ReviewInterface;
 }
