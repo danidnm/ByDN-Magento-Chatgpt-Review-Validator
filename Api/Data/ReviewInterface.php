@@ -28,9 +28,9 @@ interface ReviewInterface
     public function getGptStatus(): string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGptValidatedAt(): string;
+    public function getGptValidatedAt(): string|null;
 
     /**
      * @return string
@@ -38,9 +38,9 @@ interface ReviewInterface
     public function getGptResult(): string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGptProblems(): string;
+    public function getGptProblems(): string|null;
 
     /**
      * @return int|null
@@ -54,10 +54,10 @@ interface ReviewInterface
     public function setGptStatus(string $status): ReviewInterface;
 
     /**
-     * @param string $validatedAt
+     * @param mixed $validatedAt
      * @return ReviewInterface
      */
-    public function setGptValidatedAt(string $validatedAt): ReviewInterface;
+    public function setGptValidatedAt(mixed $validatedAt): ReviewInterface;
 
     /**
      * @param string $result
@@ -66,10 +66,10 @@ interface ReviewInterface
     public function setGptResult(string $result): ReviewInterface;
 
     /**
-     * @param string $problems
+     * @param mixed $problems
      * @return ReviewInterface
      */
-    public function setGptProblems(string $problems): ReviewInterface;
+    public function setGptProblems(mixed $problems): ReviewInterface;
 
     /**
      * @param int $excludedForTraining

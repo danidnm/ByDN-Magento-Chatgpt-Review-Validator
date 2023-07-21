@@ -47,6 +47,19 @@ class SaveAfter implements ObserverInterface
             $reviewExtraInfo->setGptExcludedForTraining($review->getGptExcludedForTraining());
         }
 
+        // If the review is being saved manually and there is a status change, set manually processed
+        // Except if it is moved to pending, which means it needs revalidation
+        $reviewOldStatus = $review->getOrigData('status_id');
+        $reviewNewStatus = $review->getStatusId();
+        if ($reviewOldStatus != $reviewNewStatus) {
+            if ($reviewNewStatus != \Magento\Review\Model\Review::STATUS_PENDING) {
+                $reviewExtraInfo->setGptStatus(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_MANUAL);
+            }
+            else {
+                $reviewExtraInfo->setGptStatus(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING);
+            }
+        }
+
         // Save updated info
         $this->reviewExtraInfoResource->save($reviewExtraInfo);
     }

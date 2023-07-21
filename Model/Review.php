@@ -38,9 +38,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGptValidatedAt(): string
+    public function getGptValidatedAt(): string|null
     {
         return $this->getData(self::GPT_VALIDATED_AT);
     }
@@ -54,9 +54,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGptProblems(): string
+    public function getGptProblems(): string|null
     {
         return $this->getData(self::GPT_PROBLEMS);
     }
@@ -88,10 +88,10 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
-     * @param string $validatedAt
+     * @param mixed $validatedAt
      * @return ReviewInterface
      */
-    public function setGptValidatedAt(string $validatedAt): ReviewInterface
+    public function setGptValidatedAt(mixed $validatedAt): ReviewInterface
     {
         return $this->setData(self::GPT_VALIDATED_AT, $validatedAt);
     }
@@ -106,10 +106,10 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
-     * @param string $problems
+     * @param mixed $problems
      * @return ReviewInterface
      */
-    public function setGptProblems(string $problems): ReviewInterface
+    public function setGptProblems(mixed $problems): ReviewInterface
     {
         return $this->setData(self::GPT_PROBLEMS, $problems);
     }
