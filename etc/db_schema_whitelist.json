@@ -1,0 +1,15 @@
+{
+    "dn_chatgpt_review_scores": {
+        "column": {
+            "review_id":  true,
+            "validated_at": true,
+            "problems":  true,
+            "result": true,
+            "manually_validated": true,
+            "excluded_for_training": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
