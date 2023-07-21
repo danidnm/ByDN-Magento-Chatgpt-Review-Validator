@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="review_save_after">
-        <observer name="dngptrv_review_save_after" instance="DanielNavarro\ChatGptReviewValidator\Observer\Review\SaveAfter" />
-    </event>
-    <event name="review_load_after">
-        <observer name="dngptrv_review_load_after" instance="DanielNavarro\ChatGptReviewValidator\Observer\Review\LoadAfter" />
-    </event>
+
+    <!-- CRUD model for review extension -->
+    <preference for="DanielNavarro\ChatGptReviewValidator\Api\Data\ReviewInterface" type="DanielNavarro\ChatGptReviewValidator\Model\Review" />
+
 </config>

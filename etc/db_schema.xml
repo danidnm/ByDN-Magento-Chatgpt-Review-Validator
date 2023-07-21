@@ -3,7 +3,8 @@
 
     <table name="dn_chatgpt_review_scores" resource="default" engine="innodb" comment="Review scores">
 
-        <column xsi:type="int" name="review_id" identity="true" comment="Review ID" />
+        <column xsi:type="int" name="id" identity="true" comment="Review ID" />
+        <column xsi:type="int" name="review_id" unsigned="true" nullable="false" comment="Review ID" />
         <column xsi:type="timestamp" name="validated_at" nullable="false" on_update="false" default="CURRENT_TIMESTAMP" comment="Validation date" />
         <column xsi:type="varchar" name="problems" nullable="false" length="256" comment="Problems encountered with the review" />
         <column xsi:type="varchar" name="result" nullable="false" length="64" comment="Result of the automatic validation" />
@@ -11,7 +12,7 @@
         <column xsi:type="int" name="excluded_for_training" unsigned="true" nullable="false" default="0" comment="Review was validated manually" />
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="review_id" />
+            <column name="id" />
         </constraint>
 
     </table>

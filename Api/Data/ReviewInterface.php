@@ -1,15 +1,21 @@
 <?php
 
-namespace FarmaciasVivo\Appointments\Api\Data;
+namespace DanielNavarro\ChatGptReviewValidator\Api\Data;
 
 interface ReviewInterface
 {
+    const ID = 'id';
     const REVIEW_ID = 'review_id';
     const VALIDATED_AT = 'validated_at';
     const PROBLEMS = 'problems';
     const RESULT = 'result';
     const MANUALLY_VALIDATED = 'manually_validated';
     const EXCLUDED_FOR_TRAINING = 'excluded_for_training';
+
+    /**
+     * @return null|int
+     */
+    public function getId(): ?int;
 
     /**
      * @return null|int

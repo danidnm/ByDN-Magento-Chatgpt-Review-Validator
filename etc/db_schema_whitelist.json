@@ -1,6 +1,7 @@
 {
     "dn_chatgpt_review_scores": {
         "column": {
+            "id":  true,
             "review_id":  true,
             "validated_at": true,
             "problems":  true,
