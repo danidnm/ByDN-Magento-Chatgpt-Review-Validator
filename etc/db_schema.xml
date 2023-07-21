@@ -14,6 +14,9 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id" />
         </constraint>
+        <constraint xsi:type="unique" referenceId="DNGPTRS_REVIEW_ID">
+            <column name="review_id"/>
+        </constraint>
 
     </table>
 
