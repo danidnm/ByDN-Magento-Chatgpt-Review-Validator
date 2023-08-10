@@ -33,7 +33,7 @@ class LoadAfter implements ObserverInterface
         $this->reviewExtraInfoResource->load($reviewExtraInfo, $review->getId(), 'gpt_review_id');
         $data = $reviewExtraInfo->getData();
 
-        // Remove IDs to not override the review data, with will not be the same
+        // Remove IDs to not override the review data, which will not be the same
         unset($data['id']);
         unset($data['gpt_review_id']);
 

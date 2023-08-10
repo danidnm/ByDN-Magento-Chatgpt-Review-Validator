@@ -39,7 +39,10 @@ class SaveAfter implements ObserverInterface
             $reviewExtraInfo->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING);
             $reviewExtraInfo->setGptExcludedForTraining(0);
         }
-        else {
+
+        // If data in the review, now override the database values and save
+        if ($review->getGptReviewId() != '') {
+            $reviewExtraInfo->setGptReviewId($review->getId());
             $reviewExtraInfo->setGptStatus($review->getGptStatus());
             $reviewExtraInfo->setGptValidatedAt($review->getGptValidatedAt());
             $reviewExtraInfo->setGptResult($review->getGptResult());
