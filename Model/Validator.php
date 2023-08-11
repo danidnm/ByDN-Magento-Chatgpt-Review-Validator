@@ -47,7 +47,7 @@ class Validator
         }
 
         // Extract review info to be validated
-        $fullText = $review->getNickname() . ' ' . $review->getTitle() . $review->getDetail();
+        $fullText = $review->getNickname() . ' / ' . $review->getTitle() . ' / ' .  $review->getDetail();
 
         // Validate with moderation model
         $result = $this->chatGptModeration->moderateText($fullText);
@@ -58,7 +58,6 @@ class Validator
         }
 
         // Set new status and date
-        $review->setGptReviewId($review->getId());
         $review->setGptStatus(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED);
         $review->setGptValidatedAt($this->timezone->date()->format('Y-m-d H:i:s'));
         $review->setGptExcludedForTraining(0);

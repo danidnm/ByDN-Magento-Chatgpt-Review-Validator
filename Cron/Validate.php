@@ -84,7 +84,7 @@ class Validate
         // Get collection of pending reviews
         $collection = $this->reviewCollectionFactory->create();
         $collection->addFieldToSelect('review_id');
-        //$collection->addFieldToFilter('status_id', \Magento\Review\Model\Review::STATUS_PENDING);
+        $collection->addFieldToFilter('status_id', \Magento\Review\Model\Review::STATUS_PENDING);
 
         return $collection;
     }
