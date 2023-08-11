@@ -4,6 +4,7 @@
     <module name="DanielNavarro_ChatGptReviewValidator" setup_version="1.0.0">
         <sequence>
             <module name="DanielNavarro_ChatGpt" />
+            <module name="DanielNavarro_Logger" />
         </sequence>
     </module>
 </config>
