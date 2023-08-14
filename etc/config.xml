@@ -5,6 +5,14 @@
             <general>
                 <enable>0</enable>
             </general>
+            <scores>
+                <sexual>25</sexual>
+                <hate>25</hate>
+                <harassment>25</harassment>
+                <selfharm>25</selfharm>
+                <threatening>25</threatening>
+                <violence>25</violence>
+            </scores>
         </danielnavarro_chatgptreviewvalidator>
     </default>
 </config>

@@ -7,6 +7,7 @@
             "gpt_validated_at": true,
             "gpt_result": true,
             "gpt_problems":  true,
+            "gpt_score_summary":  true,
             "gpt_excluded_for_training": true
         },
         "constraint": {

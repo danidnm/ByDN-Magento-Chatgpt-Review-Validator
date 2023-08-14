@@ -26,5 +26,10 @@
             <argument name="logger" xsi:type="object">DanielNavarro\ChatGptReviewValidator\Logger\Logger</argument>
         </arguments>
     </type>
+    <type name="DanielNavarro\ChatGptReviewValidator\Model\Validator">
+        <arguments>
+            <argument name="logger" xsi:type="object">DanielNavarro\ChatGptReviewValidator\Logger\Logger</argument>
+        </arguments>
+    </type>
 
 </config>

@@ -41,6 +41,7 @@ class SaveAfter implements \Magento\Framework\Event\ObserverInterface
             $review->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING);
             $review->setGptValidatedAt(null);
             $review->setGptProblems('');
+            $review->setGptScoreSummary('');
             $review->setGptExcludedForTraining(0);
         }
 
@@ -50,6 +51,7 @@ class SaveAfter implements \Magento\Framework\Event\ObserverInterface
         $reviewExtraInfo->setGptResult($review->getGptResult());
         $reviewExtraInfo->setGptValidatedAt($review->getGptValidatedAt());
         $reviewExtraInfo->setGptProblems($review->getGptProblems());
+        $reviewExtraInfo->setGptScoreSummary($review->getGptScoreSummary());
         $reviewExtraInfo->setGptExcludedForTraining($review->getGptExcludedForTraining());
 
         // If the review is being saved to pending state, it must be a manual action from the backoffice, so we mark it as pending for Open AI.

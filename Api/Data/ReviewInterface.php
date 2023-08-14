@@ -10,6 +10,7 @@ interface ReviewInterface
     const GPT_VALIDATED_AT = 'gpt_validated_at';
     const GPT_RESULT = 'gpt_result';
     const GPT_PROBLEMS = 'gpt_problems';
+    const GPT_SCORE_SUMMARY = 'gpt_score_summary';
     const GPT_EXCLUDED_FOR_TRAINING = 'gpt_excluded_for_training';
 
     /**
@@ -43,6 +44,11 @@ interface ReviewInterface
     public function getGptProblems(): string|null;
 
     /**
+     * @return string|null
+     */
+    public function getGptScoreSummary(): string|null;
+
+    /**
      * @return int|null
      */
     public function getGptExcludedForTraining(): ?int;
@@ -70,6 +76,12 @@ interface ReviewInterface
      * @return ReviewInterface
      */
     public function setGptProblems(mixed $problems): ReviewInterface;
+
+    /**
+     * @param mixed $scoreSummary
+     * @return ReviewInterface
+     */
+    public function setGptScoreSummary(mixed $scoreSummary): ReviewInterface;
 
     /**
      * @param int $excludedForTraining

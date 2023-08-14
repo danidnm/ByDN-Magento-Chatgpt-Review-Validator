@@ -62,6 +62,14 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getGptScoreSummary(): string|null
+    {
+        return $this->getData(self::GPT_SCORE_SUMMARY);
+    }
+
+    /**
      * @return int
      */
     public function getGptExcludedForTraining(): int
@@ -112,6 +120,15 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     public function setGptProblems(mixed $problems): ReviewInterface
     {
         return $this->setData(self::GPT_PROBLEMS, $problems);
+    }
+
+    /**
+     * @param mixed $scoreSummary
+     * @return ReviewInterface
+     */
+    public function setGptScoreSummary(mixed $scoreSummary): ReviewInterface
+    {
+        return $this->setData(self::GPT_SCORE_SUMMARY, $scoreSummary);
     }
 
     /**

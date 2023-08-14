@@ -40,6 +40,7 @@ class LoadAfter implements \Magento\Framework\Event\ObserverInterface
             $data[ReviewInterface::GPT_RESULT] = \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING;
             $data[ReviewInterface::GPT_VALIDATED_AT] = null;
             $data[ReviewInterface::GPT_PROBLEMS] = '';
+            $data[ReviewInterface::GPT_SCORE_SUMMARY] = '';
             $data[ReviewInterface::GPT_EXCLUDED_FOR_TRAINING] = 0;
         }
 
