@@ -4,6 +4,11 @@
     <!-- CRUD model for review extension -->
     <preference for="DanielNavarro\ChatGptReviewValidator\Api\Data\ReviewInterface" type="DanielNavarro\ChatGptReviewValidator\Model\Review" />
 
+    <!-- Add information to the review form -->
+    <type name="Magento\Review\Block\Adminhtml\Edit\Form">
+        <plugin name="DnGptRV_Review_Form" type="DanielNavarro\ChatGptReviewValidator\Plugin\Magento\Review\Block\Adminhtml\Edit\Form" sortOrder="1" disabled="false" />
+    </type>
+
     <!-- LOG dn_gpt_review (definition) -->
     <virtualType name="DanielNavarro\ChatGptReviewValidator\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
         <arguments>

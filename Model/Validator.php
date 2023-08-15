@@ -4,8 +4,8 @@ namespace DanielNavarro\ChatGptReviewValidator\Model;
 
 class Validator
 {
-    public const RESULT_FLAGGED_NO = 0;
-    public const RESULT_FLAGGED_YES = 1;
+//    public const RESULT_FLAGGED_NO = 0;
+//    public const RESULT_FLAGGED_YES = 1;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
@@ -162,11 +162,11 @@ class Validator
 
         // Iterate over results and set review data
         if (!empty($problems)) {
-            $review->setGptResult(self::RESULT_FLAGGED_YES);
+            $review->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED);
             $review->setGptProblems(implode(',', $problems));
         }
         else {
-            $review->setGptResult(self::RESULT_FLAGGED_NO);
+            $review->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_OK);
             $review->setGptProblems('');
         }
 
@@ -176,7 +176,10 @@ class Validator
 
         // Modify review status if needed
         if ($this->chatGptReviewValidationConfig->isAutoValidationEnabled()) {
-            if ($review->getGptResult() == self::RESULT_FLAGGED_YES) {
+            if (
+                $review->getGptResult() ==
+                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
+            ) {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_NOT_APPROVED);
             }
             else {

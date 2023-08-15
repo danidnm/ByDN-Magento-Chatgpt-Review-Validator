@@ -11,33 +11,55 @@ class Categories implements \Magento\Framework\Data\OptionSourceInterface
     const CATEGORY_THREATENING = 'threatening';
     const CATEGORY_VIOLENCE = 'violence';
 
+    private $labels = [
+        self::CATEGORY_SEXUAL => 'Sexual language',
+        self::CATEGORY_HATE => 'Hate',
+        self::CATEGORY_HARASSMENT => 'Harassment',
+        self::CATEGORY_SELF_HARM => 'Self-harm',
+        self::CATEGORY_THREATENING => 'Threatening',
+        self::CATEGORY_VIOLENCE => 'Violence',
+    ];
+
+    /**
+     * @return array[]
+     */
     public function toOptionArray()
     {
         return [
             [
-                'label' => __('Sexual'),
+                'label' => __($this->labels[self::CATEGORY_SEXUAL]),
                 self::CATEGORY_SEXUAL,
             ],
             [
-                'label' => __('Hate'),
+                'label' => __($this->labels[self::CATEGORY_HATE]),
                 self::CATEGORY_HATE,
             ],
             [
-                'label' => __('Harassment'),
+                'label' => __($this->labels[self::CATEGORY_HARASSMENT]),
                 self::CATEGORY_HARASSMENT,
             ],
             [
-                'label' => __('Self-harm'),
+                'label' => __($this->labels[self::CATEGORY_SELF_HARM]),
                 self::CATEGORY_SELF_HARM,
             ],
             [
-                'label' => __('Threatening'),
+                'label' => __($this->labels[self::CATEGORY_THREATENING]),
                 self::CATEGORY_THREATENING,
             ],
             [
-                'label' => __('Violence'),
+                'label' => __($this->labels[self::CATEGORY_VIOLENCE]),
                 self::CATEGORY_VIOLENCE,
             ],
         ];
+    }
+
+    /**
+     * Return status label for the status
+     * @param $status
+     * @return \Magento\Framework\Phrase
+     */
+    public function getLabel($status) {
+
+        return (isset($this->labels[$status])) ? __($this->labels[$status]) : __('Unknown');
     }
 }

@@ -25,8 +25,8 @@ s            </group>
                 <field id="additional_comment" translate="label comment" type="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label><![CDATA[<strong>How validation scores work</strong>]]></label>
                     <comment><![CDATA[<p>For each category below, introduce a number between 0 and 100, meaning:</p>
-                        <p>- 0 means strongest validation. No language in the category is allowed at all.<br />
-                        - 100 means no validation. Any comment will pass the validation in the category assigned.</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- 0 means strongest validation. No language in the category is allowed at all.<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;- 100 means no validation. Any comment will pass the validation in the category assigned.</p>
                         <p>(For most ecommerce, values between 20 and 30 are recommended)</p>
                     ]]></comment>
                     <frontend_model>Magento\Analytics\Block\Adminhtml\System\Config\AdditionalComment</frontend_model>

@@ -1,6 +1,4 @@
 Usar funciones correctas de log cuando se actualice el logger (debug info)
-Guardar puntuaciones y resultados completos en la base de datos
 Mostrar resultado de chat gpt en las reviews (backoffice)
 Mostrar estado de la validación en el listado de reviews (ver si es validación manual, automática o pendiente)
-Configuración para niveles de detección
 
