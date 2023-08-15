@@ -5,19 +5,19 @@
             <label>AI Extensions (by DN)</label>
         </tab>
         <section id="danielnavarro_chatgptreviewvalidator" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>ChatGPT Review Validator</label>
+            <label>OpenAI Review Validator</label>
             <tab>danielnavarro</tab>
             <resource>DanielNavarro_ChatGptReviewValidator::config</resource>
             <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>ChatGPT Review Validator Enabled</label>
+                    <label>OpenAI Review Validator Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="auto_validation" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Auto validate reviews</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If set to No, the reviews are processed by ChatGPT but not auto updated to Approved or Rejected status</comment>
+                    <comment>If set to No, the reviews are processed by OpenAI but not auto updated to Approved or Rejected status</comment>
                 </field>
 s            </group>
             <group id="scores" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">

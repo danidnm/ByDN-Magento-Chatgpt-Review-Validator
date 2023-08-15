@@ -18,7 +18,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     ];
 
     /**
-     * Check if ChatGPT integration is enabled
+     * Check if OpenAI integration is enabled
      * @param $store_id
      * @return mixed
      */

@@ -70,7 +70,7 @@ class Form
             // New fieldset for validation data
             $fieldset = $form->addFieldset(
                 'review_gpt_validation',
-                ['legend' => __('Open AI validation details'), 'class' => 'fieldset-wide']
+                ['legend' => __('OpenAI validation details'), 'class' => 'fieldset-wide']
             );
 
             // Result of the validation

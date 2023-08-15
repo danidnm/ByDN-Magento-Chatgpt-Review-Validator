@@ -54,7 +54,7 @@ class SaveAfter implements \Magento\Framework\Event\ObserverInterface
         $reviewExtraInfo->setGptScoreSummary($review->getGptScoreSummary());
         $reviewExtraInfo->setGptExcludedForTraining($review->getGptExcludedForTraining());
 
-        // If the review is being saved to pending state, it must be a manual action from the backoffice, so we mark it as pending for Open AI.
+        // If the review is being saved to pending state, it must be a manual action from the backoffice, so we mark it as pending for OpenAI.
         // If another status is being set, it may be a manual action from the backoffice or auto validation from the crontab task
         $reviewOldStatus = $review->getOrigData('status_id');
         $reviewNewStatus = $review->getStatusId();
