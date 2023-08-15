@@ -81,6 +81,19 @@ class Form
                 \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING
             ) {
 
+                // Append result to the status field
+                if (
+                    $this->currentReview->getGptStatus() ==
+                    \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
+                ) {
+                    $text = '&nbsp;&nbsp;<small>(' .
+                        __('Automatic validation done at') . ' ' .
+                        $this->currentReview->getGptValidatedAt() .
+                        ').&nbsp;<a href="#detail">' . __('See details') . '</a>.</small>';
+                    $statusField = $form->getElement('status_id');
+                    $statusField->setAfterElementHtml($text);
+                }
+
                 // Add validation date
                 $this->addGptValidationDate($fieldset);
 
@@ -199,7 +212,12 @@ class Form
         // Get scores (json)
         $scores = $this->currentReview->getGptScoreSummary();
         $scores = \json_decode($scores, true);
-        $categoryScores = $scores['categories'];
+        if ($scores == null) {
+            return;
+        }
+
+        // Extract categories
+        $categoryScores = $scores['categories'] ?? [];
 
         // Iterate and add categories
         foreach ($categoryScores as $categoryScore => $data) {
@@ -210,10 +228,10 @@ class Form
             $maxScore = $data['maxScore'];
             $flagged = ((double)$score > (double)$maxScore);
             if ($flagged == '1') {
-                $formatedValue = '<span style="color: red;">' . $score . '</span> / ' . $maxScore;
+                $formatedValue = '<span style="color: red;">' . number_format($score, 2) . '</span> / ' . $maxScore;
             }
             else {
-                $formatedValue = $score . ' / ' . $maxScore;
+                $formatedValue = number_format($score, 2) . ' / ' . $maxScore;
             }
 
             // Add Field
@@ -225,7 +243,6 @@ class Form
                     'text' => $formatedValue
                 ]
             );
-
         }
     }
 }
