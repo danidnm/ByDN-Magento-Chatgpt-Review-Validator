@@ -57,20 +57,21 @@ class Form
         // Get the review fieldset if exist and add our custom block with GPT validation info
         $form = $form->getForm();
 
-        // New fieldset for validation data
-        $fieldset = $form->addFieldset(
-            'review_gpt_validation',
-            ['legend' => __('Open AI validation details'), 'class' => 'fieldset-wide']
-        );
-
-        // Add validation status
-        $this->addGptStatus($fieldset);
+        // Add overall notice to the current actual status
+        $statusField = $form->getElement('status_id');
+        $this->addNotice($statusField);
 
         // If status is pending do not show anything else
         if (
             $this->currentReview->getGptStatus() !=
             \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING
         ) {
+
+            // New fieldset for validation data
+            $fieldset = $form->addFieldset(
+                'review_gpt_validation',
+                ['legend' => __('Open AI validation details'), 'class' => 'fieldset-wide']
+            );
 
             // Result of the validation
             $this->addGptResult($fieldset);
@@ -80,19 +81,6 @@ class Form
                 $this->currentReview->getGptResult() !=
                 \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING
             ) {
-
-                // Append result to the status field
-                if (
-                    $this->currentReview->getGptStatus() ==
-                    \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
-                ) {
-                    $text = '&nbsp;&nbsp;<small>(' .
-                        __('Automatic validation done at') . ' ' .
-                        $this->currentReview->getGptValidatedAt() .
-                        ').&nbsp;<a href="#detail">' . __('See details') . '</a>.</small>';
-                    $statusField = $form->getElement('status_id');
-                    $statusField->setAfterElementHtml($text);
-                }
 
                 // Add validation date
                 $this->addGptValidationDate($fieldset);
@@ -112,6 +100,32 @@ class Form
         }
 
         return [$form];
+    }
+
+    private function addNotice($statusField) {
+
+        // Append result to the status field
+        if (
+            $this->currentReview->getGptStatus() ==
+            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
+        ) {
+            $text = '&nbsp;&nbsp;<small>(' .
+                __('Automatic validation done at') . ' ' .
+                $this->currentReview->getGptValidatedAt() .
+                ').&nbsp;<a href="#detail">' . __('See details') . '</a>.</small>';
+            $statusField->setAfterElementHtml($text);
+        }
+        else if (
+            $this->currentReview->getStatusId() !=
+            \Magento\Review\Model\Review::STATUS_PENDING
+        ) {
+            $text = '&nbsp;&nbsp;<small>(' . __('This review was manually validated') . ')</small>';
+            $statusField->setAfterElementHtml($text);
+        }
+        else {
+            $text = '&nbsp;&nbsp;<small>(' . __('Awaiting for automatic validation') . ')</small>';
+            $statusField->setAfterElementHtml($text);
+        }
     }
 
     /**
