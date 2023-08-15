@@ -10,7 +10,7 @@ class Result implements \Magento\Framework\Option\ArrayInterface
 
     private $labels = [
         self::REVIEW_RESULT_PENDING => 'Pending',
-        self::REVIEW_RESULT_FLAGGED => 'Flagged',
+        self::REVIEW_RESULT_FLAGGED => 'Problems found',
         self::REVIEW_RESULT_OK => 'OK',
     ];
 

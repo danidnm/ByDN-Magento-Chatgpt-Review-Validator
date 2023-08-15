@@ -142,6 +142,12 @@ class Form
 
         // Get status label
         $resultText = $this->gptResult->getLabel($this->currentReview->getGptResult());
+        if (
+            $this->currentReview->getGptResult() ==
+            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
+        ) {
+            $resultText = '<span style="color: red;">' . $resultText . '</span>';
+        }
 
         // Add field
         $fieldset->addField(
