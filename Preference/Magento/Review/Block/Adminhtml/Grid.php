@@ -79,8 +79,6 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
 
     protected function _prepareColumns()
     {
-        parent::_prepareColumns();
-
         // Where to add
         $after = 'status';
         if ($this->_coreRegistry->registry('usePendingFilter')) {
@@ -99,5 +97,7 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
             ],
             $after
         );
+
+        parent::_prepareColumns();
     }
 }
