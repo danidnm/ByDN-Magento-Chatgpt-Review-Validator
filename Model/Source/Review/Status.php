@@ -38,6 +38,20 @@ class Status implements \Magento\Framework\Option\ArrayInterface
     }
 
     /**
+     * @return array
+     */
+    public function toColumnOptionArray()
+    {
+        $options = [
+            self::REVIEW_STATUS_PENDING => __($this->labels[self::REVIEW_STATUS_PENDING]),
+            self::REVIEW_STATUS_PROCESSED => __($this->labels[self::REVIEW_STATUS_PROCESSED]),
+            self::REVIEW_STATUS_MANUAL => __($this->labels[self::REVIEW_STATUS_MANUAL]),
+        ];
+
+        return $options;
+    }
+
+    /**
      * Return status label for the status
      * @param $status
      * @return \Magento\Framework\Phrase
