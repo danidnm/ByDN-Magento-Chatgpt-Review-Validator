@@ -23,6 +23,7 @@ class Collection extends \Magento\Review\Model\ResourceModel\Review\Product\Coll
             case 'rdt.nickname':
             case 'rdt.detail':
             case 'gpt.gpt_status':      // Added to core function
+            case 'gpt.gpt_result':      // Added to core function
                 $this->getSelect()->order($attribute . ' ' . $dir);
                 break;
             case 'stores':
@@ -57,6 +58,7 @@ class Collection extends \Magento\Review\Model\ResourceModel\Review\Product\Coll
             case 'rdt.nickname':
             case 'rdt.detail':
             case 'gpt.gpt_status':      // Added to core function
+            case 'gpt.gpt_result':      // Added to core function
                 $conditionSql = $this->_getConditionSql($attribute, $condition);
                 $this->getSelect()->where($conditionSql);
                 break;

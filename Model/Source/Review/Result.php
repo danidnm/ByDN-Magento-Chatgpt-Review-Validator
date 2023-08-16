@@ -44,6 +44,22 @@ class Result implements \Magento\Framework\Option\ArrayInterface
     }
 
     /**
+     * Returns options and labels to be used as a colum in grids
+     *
+     * @return array
+     */
+    public function toColumnOptionArray()
+    {
+        $options = [
+            self::REVIEW_RESULT_PENDING => __($this->labels[self::REVIEW_RESULT_PENDING]),
+            self::REVIEW_RESULT_FLAGGED => __($this->labels[self::REVIEW_RESULT_FLAGGED]),
+            self::REVIEW_RESULT_OK => __($this->labels[self::REVIEW_RESULT_OK]),
+        ];
+
+        return $options;
+    }
+
+    /**
      * Return result label for the result
      *
      * @param string $result

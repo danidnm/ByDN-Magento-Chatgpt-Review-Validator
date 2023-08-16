@@ -15,6 +15,11 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
     private $gptStatus;
 
     /**
+     * @var \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result
+     */
+    private $gptResult;
+
+    /**
      * Controls if the join with open ai table is already done
      * @var bool
      */
@@ -42,10 +47,12 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus,
+        \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result $gptResult,
         array $data = []
     ) {
         $this->resourceConnection = $resourceConnection;
         $this->gptStatus = $gptStatus;
+        $this->gptResult = $gptResult;
         parent::__construct(
             $context,
             $backendHelper,
@@ -72,7 +79,7 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
             $collection->getSelect()->joinLeft(
                 ['gpt' => $gptTable],
                 'rt.review_id = gpt.gpt_review_id',
-                ['gpt_status']
+                ['gpt_status', 'gpt_result']
             );
 
             $this->joinAdded = true;
@@ -98,13 +105,26 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
         $this->addColumnAfter(
             'gpt_status',
             [
-                'header' => __('OpenAI Validation'),
+                'header' => __('OpenAI Status'),
                 'type' => 'options',
                 'options' => $this->gptStatus->toColumnOptionArray(),
                 'filter_index' => 'gpt.gpt_status',
                 'index' => 'gpt_status'
             ],
             $after
+        );
+
+        // Add Open AI status column
+        $this->addColumnAfter(
+            'gpt_result',
+            [
+                'header' => __('OpenAI Result'),
+                'type' => 'options',
+                'options' => $this->gptResult->toColumnOptionArray(),
+                'filter_index' => 'gpt.gpt_result',
+                'index' => 'gpt_result'
+            ],
+            'gpt_status'
         );
 
         parent::_prepareColumns();
