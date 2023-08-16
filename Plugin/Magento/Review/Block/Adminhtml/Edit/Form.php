@@ -31,6 +31,9 @@ class Form
 
     /**
      * @param \Magento\Framework\Registry $registry
+     * @param \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus
+     * @param \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result $gptResult
+     * @param \DanielNavarro\ChatGptReviewValidator\Model\Categories $gptCategories
      */
     public function __construct(
         \Magento\Framework\Registry $registry,
@@ -45,12 +48,16 @@ class Form
     }
 
     /**
+     * Modifies the form before it is set to the form container
+     *
      * @param \Magento\Review\Block\Adminhtml\Edit\Form $subject
-     * @param $form
+     * @param \Magento\Framework\Data\Form $form
      * @return array
      */
-    public function beforeSetForm(\Magento\Review\Block\Adminhtml\Edit\Form $subject, $form) {
-
+    public function beforeSetForm(
+        \Magento\Review\Block\Adminhtml\Edit\Form $subject,
+        \Magento\Framework\Data\Form $form
+    ) {
         // Current review
         $this->currentReview = $this->registry->registry('review_data');
 
@@ -62,10 +69,8 @@ class Form
         $this->addNotice($statusField);
 
         // If status is pending do not show anything else
-        if (
-            $this->currentReview->getGptStatus() !=
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING
-        ) {
+        if ($this->currentReview->getGptStatus() !=
+            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING) {
 
             // New fieldset for validation data
             $fieldset = $form->addFieldset(
@@ -77,10 +82,8 @@ class Form
             $this->addGptResult($fieldset);
 
             // Only show problems and scores if processed
-            if (
-                $this->currentReview->getGptResult() !=
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING
-            ) {
+            if ($this->currentReview->getGptResult() !=
+                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING) {
 
                 // Add validation date
                 $this->addGptValidationDate($fieldset);
@@ -102,38 +105,46 @@ class Form
         return [$form];
     }
 
-    private function addNotice($statusField) {
+    /**
+     * Adds notice below the status field to indicate the admin about the GPT validation status
+     *
+     * @param \Magento\Framework\Data\Form\Element\AbstractElement $statusField
+     * @return void
+     */
+    private function addNotice(\Magento\Framework\Data\Form\Element\AbstractElement $statusField)
+    {
 
         // Append result to the status field
-        if (
-            $this->currentReview->getGptStatus() ==
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
-        ) {
+        if ($this->currentReview->getGptStatus() ==
+            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED) {
+
             $text = '&nbsp;&nbsp;<small>(' .
                 __('Automatic validation done at') . ' ' .
                 $this->currentReview->getGptValidatedAt() .
                 ').&nbsp;<a href="#detail">' . __('See details') . '</a>.</small>';
             $statusField->setAfterElementHtml($text);
-        }
-        else if (
-            $this->currentReview->getStatusId() !=
-            \Magento\Review\Model\Review::STATUS_PENDING
-        ) {
+
+        } elseif ($this->currentReview->getStatusId() != \Magento\Review\Model\Review::STATUS_PENDING) {
+
             $text = '&nbsp;&nbsp;<small>(' . __('This review was manually validated') . ')</small>';
             $statusField->setAfterElementHtml($text);
-        }
-        else {
+
+        } else {
+
             $text = '&nbsp;&nbsp;<small>(' . __('Awaiting for automatic validation') . ')</small>';
             $statusField->setAfterElementHtml($text);
+
         }
     }
 
     /**
-     * @param $fieldset
+     * Add GPT status to the fieldset
+     *
+     * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptStatus($fieldset) {
-
+    private function addGptStatus(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    {
         // Get status label
         $statusText = $this->gptStatus->getLabel($this->currentReview->getGptStatus());
 
@@ -149,17 +160,17 @@ class Form
     }
 
     /**
-     * @param $fieldset
+     * Add GPT validation result to the fieldset
+     *
+     * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptResult($fieldset) {
-
+    private function addGptResult(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    {
         // Get status label
         $resultText = $this->gptResult->getLabel($this->currentReview->getGptResult());
-        if (
-            $this->currentReview->getGptResult() ==
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
-        ) {
+        if ($this->currentReview->getGptResult() ==
+            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
             $resultText = '<span style="color: red;">' . $resultText . '</span>';
         }
 
@@ -175,11 +186,13 @@ class Form
     }
 
     /**
-     * @param $fieldset
+     * Add GPT validation date to the fieldset
+     *
+     * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptValidationDate($fieldset) {
-
+    private function addGptValidationDate(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    {
         // Get status label
         $validationDate = $this->currentReview->getGptValidatedAt();
 
@@ -195,11 +208,13 @@ class Form
     }
 
     /**
-     * @param $fieldset
+     * Add GPT problems to the fieldset
+     *
+     * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptProblems($fieldset) {
-
+    private function addGptProblems(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    {
         // Get formated problems or none
         $problems = $this->currentReview->getGptProblems();
         if (!empty($problems)) {
@@ -208,8 +223,7 @@ class Form
             $problems = array_map('ucfirst', $problems);
             $problems = implode(', ', $problems);
             $problems = '<span style="color:red;">' . $problems . '</span>';
-        }
-        else {
+        } else {
             $problems = __('None');
         }
 
@@ -224,11 +238,13 @@ class Form
     }
 
     /**
-     * @param $fieldset
+     * Add GPT scores to the fieldset
+     *
+     * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptScores($fieldset) {
-
+    private function addGptScores(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    {
         // Get scores (json)
         $scores = $this->currentReview->getGptScoreSummary();
         $scores = \json_decode($scores, true);
@@ -249,8 +265,7 @@ class Form
             $flagged = ((double)$score > (double)$maxScore);
             if ($flagged == '1') {
                 $formatedValue = '<span style="color: red;">' . number_format($score, 2) . '</span> / ' . $maxScore;
-            }
-            else {
+            } else {
                 $formatedValue = number_format($score, 2) . ' / ' . $maxScore;
             }
 
@@ -266,4 +281,3 @@ class Form
         }
     }
 }
-

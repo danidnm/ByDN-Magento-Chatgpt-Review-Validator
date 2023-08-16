@@ -4,13 +4,17 @@ namespace DanielNavarro\ChatGptReviewValidator\Model;
 
 class Categories implements \Magento\Framework\Data\OptionSourceInterface
 {
-    const CATEGORY_SEXUAL = 'sexual';
-    const CATEGORY_HATE = 'hate';
-    const CATEGORY_HARASSMENT = 'harassment';
-    const CATEGORY_SELF_HARM = 'selfharm';
-    const CATEGORY_THREATENING = 'threatening';
-    const CATEGORY_VIOLENCE = 'violence';
+    public const CATEGORY_SEXUAL = 'sexual';
+    public const CATEGORY_HATE = 'hate';
+    public const CATEGORY_HARASSMENT = 'harassment';
+    public const CATEGORY_SELF_HARM = 'selfharm';
+    public const CATEGORY_THREATENING = 'threatening';
+    public const CATEGORY_VIOLENCE = 'violence';
 
+    /**
+     * Assign category name for each moderation category
+     * @var string[]
+     */
     private $labels = [
         self::CATEGORY_SEXUAL => 'Sexual language',
         self::CATEGORY_HATE => 'Hate',
@@ -21,6 +25,8 @@ class Categories implements \Magento\Framework\Data\OptionSourceInterface
     ];
 
     /**
+     * Returns options and labels to be used as a source attribute
+     *
      * @return array[]
      */
     public function toOptionArray()
@@ -54,12 +60,13 @@ class Categories implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * Return status label for the status
-     * @param $status
+     * Return label corresponding to the category
+     *
+     * @param string $category
      * @return \Magento\Framework\Phrase
      */
-    public function getLabel($status) {
-
-        return (isset($this->labels[$status])) ? __($this->labels[$status]) : __('Unknown');
+    public function getLabel(string $category)
+    {
+        return (isset($this->labels[$category])) ? __($this->labels[$category]) : __('Unknown');
     }
 }

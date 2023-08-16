@@ -4,9 +4,6 @@ namespace DanielNavarro\ChatGptReviewValidator\Model;
 
 class Validator
 {
-//    public const RESULT_FLAGGED_NO = 0;
-//    public const RESULT_FLAGGED_YES = 1;
-
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
@@ -27,8 +24,10 @@ class Validator
     private $logger;
 
     /**
+     * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
      * @param \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
      * @param \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
+     * @param \DanielNavarro\Logger\Model\LoggerInterface $logger
      */
     public function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
@@ -43,11 +42,13 @@ class Validator
     }
 
     /**
+     * Performs a review moderation against OpenAI moderation service
+     *
      * @param \Magento\Review\Model\Review $review
      * @return array
      */
-    public function validateReview(\Magento\Review\Model\Review $review) {
-
+    public function validateReview(\Magento\Review\Model\Review $review)
+    {
         // Check if it is enabled
         if (!$this->chatGptReviewValidationConfig->isEnabled()) {
             return [false, $review];
@@ -93,19 +94,24 @@ class Validator
     }
 
     /**
-     * @param $review
+     * Returns a string with all the text to be moderated
+     *
+     * @param \Magento\Review\Model\Review $review
      * @return string
      */
-    private function getInfoForValidation($review) {
+    private function getInfoForValidation(\Magento\Review\Model\Review $review)
+    {
         return $review->getNickname() . ' / ' . $review->getTitle() . ' / ' .  $review->getDetail();
     }
 
     /**
-     * @param $result
+     * Process scores from OpenAI moderation service comparing them to the threshold of each category
+     *
+     * @param array $result
      * @return array
      */
-    private function processResultScores($result) {
-
+    private function processResultScores(array $result)
+    {
         // Allowed máximum scores
         $maxScores = $this->chatGptReviewValidationConfig->getMaximumScores();
 
@@ -130,11 +136,13 @@ class Validator
     }
 
     /**
-     * @param $result
+     * Extract problems found from scores
+     *
+     * @param array $result
      * @return array
      */
-    private function extractProblems($result) {
-
+    private function extractProblems(array $result)
+    {
         // List of problems found
         $problems = [];
 
@@ -149,23 +157,29 @@ class Validator
     }
 
     /**
-     * @param $review
-     * @param $problems
+     * Updates a review with the new info and changes its status if configured
+     *
+     * @param \Magento\Review\Model\Review $review
+     * @param array $result
+     * @param array $problems
      * @return mixed
      */
-    private function updateReview($review, $result, $problems) {
-
+    private function updateReview(\Magento\Review\Model\Review $review, array $result, array $problems)
+    {
         // Set new status and date
-        $review->setGptStatus(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED);
+        $review->setGptStatus(
+            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
+        );
         $review->setGptValidatedAt($this->timezone->date()->format('Y-m-d H:i:s'));
         $review->setGptExcludedForTraining(0);
 
         // Iterate over results and set review data
         if (!empty($problems)) {
-            $review->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED);
+            $review->setGptResult(
+                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
+            );
             $review->setGptProblems(implode(',', $problems));
-        }
-        else {
+        } else {
             $review->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_OK);
             $review->setGptProblems('');
         }
@@ -176,13 +190,10 @@ class Validator
 
         // Modify review status if needed
         if ($this->chatGptReviewValidationConfig->isAutoValidationEnabled()) {
-            if (
-                $review->getGptResult() ==
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
-            ) {
+            if ($review->getGptResult() ==
+                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_NOT_APPROVED);
-            }
-            else {
+            } else {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_APPROVED);
             }
         }

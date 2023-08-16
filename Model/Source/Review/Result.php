@@ -4,10 +4,14 @@ namespace DanielNavarro\ChatGptReviewValidator\Model\Source\Review;
 
 class Result implements \Magento\Framework\Option\ArrayInterface
 {
-    const REVIEW_RESULT_PENDING = 'pending';
-    const REVIEW_RESULT_FLAGGED = 'flagged';
-    const REVIEW_RESULT_OK = 'ok';
+    public const REVIEW_RESULT_PENDING = 'pending';
+    public const REVIEW_RESULT_FLAGGED = 'flagged';
+    public const REVIEW_RESULT_OK = 'ok';
 
+    /**
+     * Assign result name for each moderation result
+     * @var string[]
+     */
     private $labels = [
         self::REVIEW_RESULT_PENDING => 'Pending',
         self::REVIEW_RESULT_FLAGGED => 'Problems found',
@@ -15,6 +19,8 @@ class Result implements \Magento\Framework\Option\ArrayInterface
     ];
 
     /**
+     * Returns options and labels to be used as a source attribute
+     *
      * @return array
      */
     public function toOptionArray()
@@ -39,11 +45,12 @@ class Result implements \Magento\Framework\Option\ArrayInterface
 
     /**
      * Return result label for the result
-     * @param $result
+     *
+     * @param string $result
      * @return \Magento\Framework\Phrase
      */
-    public function getLabel($result) {
-
+    public function getLabel(string $result)
+    {
         return (isset($this->labels[$result])) ? __($this->labels[$result]) : __('Unknown');
     }
 }

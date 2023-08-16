@@ -29,6 +29,7 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
      * @param \Magento\Review\Helper\Action\Pager $reviewActionPager
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
+     * @param \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus
      * @param array $data
      */
     public function __construct(
@@ -53,11 +54,14 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
             $reviewData,
             $reviewActionPager,
             $coreRegistry,
-            $data);
+            $data
+        );
     }
 
     /**
-     * @param $collection
+     * Joins the table with moderation information
+     *
+     * @param \Magento\Framework\Data\Collection $collection
      * @return void
      */
     public function setCollection($collection)
@@ -77,6 +81,11 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
         parent::setCollection($collection);
     }
 
+    /**
+     * Add OpenAI validation status to the grid
+     *
+     * @return void
+     */
     protected function _prepareColumns()
     {
         // Where to add

@@ -4,10 +4,14 @@ namespace DanielNavarro\ChatGptReviewValidator\Model\Source\Review;
 
 class Status implements \Magento\Framework\Option\ArrayInterface
 {
-    const REVIEW_STATUS_PENDING = 'pending';
-    const REVIEW_STATUS_PROCESSED = 'processed';
-    const REVIEW_STATUS_MANUAL = 'manual';
+    public const REVIEW_STATUS_PENDING = 'pending';
+    public const REVIEW_STATUS_PROCESSED = 'processed';
+    public const REVIEW_STATUS_MANUAL = 'manual';
 
+    /**
+     * Assign status name for each status
+     * @var string[]
+     */
     private $labels = [
         self::REVIEW_STATUS_PENDING => 'Pending',
         self::REVIEW_STATUS_PROCESSED => 'Processed',
@@ -15,6 +19,8 @@ class Status implements \Magento\Framework\Option\ArrayInterface
     ];
 
     /**
+     * Returns options and labels to be used as a source attribute
+     *
      * @return array
      */
     public function toOptionArray()
@@ -38,6 +44,8 @@ class Status implements \Magento\Framework\Option\ArrayInterface
     }
 
     /**
+     * Returns options and labels to be used as a colum in grids
+     *
      * @return array
      */
     public function toColumnOptionArray()
@@ -52,12 +60,13 @@ class Status implements \Magento\Framework\Option\ArrayInterface
     }
 
     /**
-     * Return status label for the status
-     * @param $status
+     * Return corresponding label for the status
+     *
+     * @param string $status
      * @return \Magento\Framework\Phrase
      */
-    public function getLabel($status) {
-
+    public function getLabel(string $status)
+    {
         return (isset($this->labels[$status])) ? __($this->labels[$status]) : __('Unknown');
     }
 }

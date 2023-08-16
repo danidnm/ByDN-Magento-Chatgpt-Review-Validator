@@ -7,6 +7,11 @@ use Magento\Framework\Model\AbstractExtensibleModel;
 
 class Review extends AbstractExtensibleModel implements ReviewInterface
 {
+    /**
+     * Assigns resource model for the entity
+     *
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init(\DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review::class);
@@ -14,6 +19,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Returns entity ID (this ID is not the review ID but the ID of the extra info table)
+     *
      * @return null|int
      */
     public function getId(): ?int
@@ -22,6 +29,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Returns review id for this entity
+     *
      * @return null|int
      */
     public function getGptReviewId(): ?int
@@ -30,6 +39,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Returns OpenAI validation status
+     *
      * @return string
      */
     public function getGptStatus(): string
@@ -38,6 +49,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Returns the date when the review was moderated
+     *
      * @return string|null
      */
     public function getGptValidatedAt(): string|null
@@ -46,6 +59,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Return the OpenAI validation result
+     *
      * @return string
      */
     public function getGptResult(): string
@@ -54,6 +69,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Returns OpenAI problems found
+     *
      * @return string|null
      */
     public function getGptProblems(): string|null
@@ -62,6 +79,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Returns scores for each category
+     *
      * @return string|null
      */
     public function getGptScoreSummary(): string|null
@@ -70,7 +89,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
-     * @return int
+     * Returns if this review is excluded for training
+     *
+     * @return int|null
      */
     public function getGptExcludedForTraining(): int
     {
@@ -78,6 +99,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Sets the review ID
+     *
      * @param int $reviewId
      * @return ReviewInterface
      */
@@ -87,6 +110,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Set review OpenAI moderation status
+     *
      * @param string $status
      * @return ReviewInterface
      */
@@ -96,6 +121,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Sets the OpenAI moderation date for this review
+     *
      * @param mixed $validatedAt
      * @return ReviewInterface
      */
@@ -105,6 +132,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Set OpenAI moderation result for the review
+     *
      * @param string $result
      * @return ReviewInterface
      */
@@ -114,6 +143,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Set moderation problems found for the review
+     *
      * @param mixed $problems
      * @return ReviewInterface
      */
@@ -123,6 +154,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Sets moderation scores for the review (should be a json)
+     *
      * @param mixed $scoreSummary
      * @return ReviewInterface
      */
@@ -132,6 +165,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
     }
 
     /**
+     * Sets excluded for training flag for the review
+     *
      * @param int $excludedForTraining
      * @return ReviewInterface
      */

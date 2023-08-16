@@ -6,6 +6,13 @@ use Magento\Eav\Model\Entity\Attribute\AbstractAttribute;
 
 class Collection extends \Magento\Review\Model\ResourceModel\Review\Product\Collection
 {
+    /**
+     * Overrides setOrder base method to be able to sort by OpenAI moderation status
+     *
+     * @param string $attribute
+     * @param string $dir
+     * @return $this|Collection
+     */
     public function setOrder($attribute, $dir = 'DESC')
     {
         switch ($attribute) {
@@ -32,7 +39,7 @@ class Collection extends \Magento\Review\Model\ResourceModel\Review\Product\Coll
     }
 
     /**
-     * Add attribute to filter
+     * Overrides addAttributeToFilter base method to be able to filter by OpenAI moderation status
      *
      * @param AbstractAttribute|string $attribute
      * @param array|null $condition

@@ -62,9 +62,11 @@ class Validate
 
     /**
      * Process all the pending reviews and validates through ChatGpt
+     *
      * @return void
      */
-    public function process() {
+    public function process()
+    {
         $this->logger->writeInfo(__METHOD__, __LINE__, 'Ini');
 
         // Get the collection of pending reviews
@@ -90,10 +92,11 @@ class Validate
 
     /**
      * Returns a collection of pending reviews
+     *
      * @return \Magento\Review\Model\ResourceModel\Review\Collection
      */
-    private function getPendingReviews() {
-
+    private function getPendingReviews()
+    {
         // Get collection of pending reviews
         $collection = $this->reviewCollectionFactory->create();
         $collection->addFieldToSelect('review_id');
