@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Preference\Magento\Review\Block\Adminhtml;
+namespace Bydn\ChatGptReviewValidator\Preference\Magento\Review\Block\Adminhtml;
 
 class Grid extends \Magento\Review\Block\Adminhtml\Grid
 {
@@ -10,12 +10,12 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
     private $resourceConnection;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status
+     * @var \Bydn\ChatGptReviewValidator\Model\Source\Review\Status
      */
     private $gptStatus;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result
+     * @var \Bydn\ChatGptReviewValidator\Model\Source\Review\Result
      */
     private $gptResult;
 
@@ -34,7 +34,7 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
      * @param \Magento\Review\Helper\Action\Pager $reviewActionPager
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus
+     * @param \Bydn\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus
      * @param array $data
      */
     public function __construct(
@@ -46,8 +46,8 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
         \Magento\Review\Helper\Action\Pager $reviewActionPager,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
-        \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus,
-        \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result $gptResult,
+        \Bydn\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus,
+        \Bydn\ChatGptReviewValidator\Model\Source\Review\Result $gptResult,
         array $data = []
     ) {
         $this->resourceConnection = $resourceConnection;

@@ -1,27 +1,27 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Observer\Review;
+namespace Bydn\ChatGptReviewValidator\Observer\Review;
 
-use DanielNavarro\ChatGptReviewValidator\Api\Data\ReviewInterface;
+use Bydn\ChatGptReviewValidator\Api\Data\ReviewInterface;
 
 class SaveAfter implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review
+     * @var \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review
      */
     private $reviewExtraInfoResource;
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\ReviewFactory
+     * @var \Bydn\ChatGptReviewValidator\Model\ReviewFactory
      */
     private $reviewExtraInfoFactory;
 
     /**
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
+     * @param \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource
+     * @param \Bydn\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
      */
     public function __construct(
-        \DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource,
-        \DanielNavarro\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
+        \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource,
+        \Bydn\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
     ) {
         $this->reviewExtraInfoResource = $reviewExtraInfoResource;
         $this->reviewExtraInfoFactory = $reviewExtraInfoFactory;
@@ -49,10 +49,10 @@ class SaveAfter implements \Magento\Framework\Event\ObserverInterface
         if ($review->getGptReviewId() == '') {
             $review->setGptReviewId($review->getId());
             $review->setGptStatus(
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING
+                \Bydn\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING
             );
             $review->setGptResult(
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING
+                \Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING
             );
             $review->setGptValidatedAt(null);
             $review->setGptProblems('');
@@ -81,12 +81,12 @@ class SaveAfter implements \Magento\Framework\Event\ObserverInterface
             if ($reviewNewStatus == \Magento\Review\Model\Review::STATUS_PENDING) {
                 // The review is changing to pending so mark it also in the gpt status for revalidation.
                 $reviewExtraInfo->setGptStatus(
-                    \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING
+                    \Bydn\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING
                 );
             } elseif ($reviewOldGptStatus == $reviewNewGptStatus) {
                 // The GPT status has NOT changed, but it is modified the review status. It must be manual action.
                 $reviewExtraInfo->setGptStatus(
-                    \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_MANUAL
+                    \Bydn\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_MANUAL
                 );
             }
         }

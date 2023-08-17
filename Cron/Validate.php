@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Cron;
+namespace Bydn\ChatGptReviewValidator\Cron;
 
 use Magento\Review\Model\ResourceModel\Review\Collection;
 
@@ -17,33 +17,33 @@ class Validate
     private $reviewResource;
 
     /**
-     * @var \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation
+     * @var \Bydn\ChatGpt\Model\ChatGpt\Moderation
      */
     private $chatGptModeration;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Helper\Config
+     * @var \Bydn\ChatGptReviewValidator\Helper\Config
      */
     private $chatGptReviewValidationConfig;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\Validator
+     * @var \Bydn\ChatGptReviewValidator\Model\Validator
      */
     private $reviewValidator;
 
     /**
      * @param \Magento\Review\Model\ResourceModel\Review\CollectionFactory $reviewCollectionFactory
      * @param \Magento\Review\Model\ResourceModel\Review $reviewResource
-     * @param \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
-     * @param \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\Validator $reviewValidator
+     * @param \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
+     * @param \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
+     * @param \Bydn\ChatGptReviewValidator\Model\Validator $reviewValidator
      */
     public function __construct(
         \Magento\Review\Model\ResourceModel\Review\CollectionFactory $reviewCollectionFactory,
         \Magento\Review\Model\ResourceModel\Review $reviewResource,
-        \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
-        \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig,
-        \DanielNavarro\ChatGptReviewValidator\Model\Validator $reviewValidator
+        \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
+        \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig,
+        \Bydn\ChatGptReviewValidator\Model\Validator $reviewValidator
     ) {
         $this->reviewCollectionFactory = $reviewCollectionFactory;
         $this->reviewResource = $reviewResource;

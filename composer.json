@@ -1,8 +1,9 @@
 {
-    "name": "daniel-navarro/chat-gpt-review-validator",
+    "name": "bydn/chat-gpt-review-validator",
     "description": "OpenAI Review Validator",
     "require": {
-        "php": ">=8.1"
+        "php": ">=8.1",
+        "bydn/chat-gpt": ">=1.0.0"
     },
     "type": "magento2-module",
     "version": "1.0.0",
@@ -14,7 +15,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "DanielNavarro\\ChatGptReviewValidator\\": ""
+            "Bydn\\ChatGptReviewValidator\\": ""
         }
     }
 }

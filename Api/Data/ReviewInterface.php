@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Api\Data;
+namespace Bydn\ChatGptReviewValidator\Api\Data;
 
 interface ReviewInterface
 {

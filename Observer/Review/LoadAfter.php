@@ -1,27 +1,27 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Observer\Review;
+namespace Bydn\ChatGptReviewValidator\Observer\Review;
 
-use DanielNavarro\ChatGptReviewValidator\Api\Data\ReviewInterface;
+use Bydn\ChatGptReviewValidator\Api\Data\ReviewInterface;
 
 class LoadAfter implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review
+     * @var \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review
      */
     private $reviewExtraInfoResource;
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\ReviewFactory
+     * @var \Bydn\ChatGptReviewValidator\Model\ReviewFactory
      */
     private $reviewExtraInfoFactory;
 
     /**
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
+     * @param \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource
+     * @param \Bydn\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
      */
     public function __construct(
-        \DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource,
-        \DanielNavarro\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
+        \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review $reviewExtraInfoResource,
+        \Bydn\ChatGptReviewValidator\Model\ReviewFactory $reviewExtraInfoFactory
     ) {
         $this->reviewExtraInfoResource = $reviewExtraInfoResource;
         $this->reviewExtraInfoFactory = $reviewExtraInfoFactory;
@@ -47,9 +47,9 @@ class LoadAfter implements \Magento\Framework\Event\ObserverInterface
         if (empty($data[ReviewInterface::GPT_REVIEW_ID])) {
             $data[ReviewInterface::GPT_REVIEW_ID] = $review->getId();
             $data[ReviewInterface::GPT_STATUS] =
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING;
+                \Bydn\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING;
             $data[ReviewInterface::GPT_RESULT] =
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING;
+                \Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING;
             $data[ReviewInterface::GPT_VALIDATED_AT] = null;
             $data[ReviewInterface::GPT_PROBLEMS] = '';
             $data[ReviewInterface::GPT_SCORE_SUMMARY] = '';

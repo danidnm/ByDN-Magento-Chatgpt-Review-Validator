@@ -1,24 +1,24 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Helper;
+namespace Bydn\ChatGptReviewValidator\Helper;
 
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    public const PATH_CHATGPT_REVIEW_VALIDATOR_ENABLE = 'danielnavarro_chatgptreviewvalidator/general/enable';
-    public const PATH_CHATGPT_REVIEW_VALIDATOR_AUTO = 'danielnavarro_chatgptreviewvalidator/general/auto_validation';
-    public const PATH_CHATGPT_REVIEW_SCORES_PATH = 'danielnavarro_chatgptreviewvalidator/scores/';
+    public const PATH_CHATGPT_REVIEW_VALIDATOR_ENABLE = 'bydn_chatgptreviewvalidator/general/enable';
+    public const PATH_CHATGPT_REVIEW_VALIDATOR_AUTO = 'bydn_chatgptreviewvalidator/general/auto_validation';
+    public const PATH_CHATGPT_REVIEW_SCORES_PATH = 'bydn_chatgptreviewvalidator/scores/';
 
     /**
      * List of moderation categories
      * @var array
      */
     private $categories = [
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories::CATEGORY_SEXUAL,
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories::CATEGORY_HATE,
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories::CATEGORY_HARASSMENT,
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories::CATEGORY_SELF_HARM,
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories::CATEGORY_THREATENING,
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories::CATEGORY_VIOLENCE,
+        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_SEXUAL,
+        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_HATE,
+        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_HARASSMENT,
+        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_SELF_HARM,
+        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_THREATENING,
+        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_VIOLENCE,
     ];
 
     /**

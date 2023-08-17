@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Model;
+namespace Bydn\ChatGptReviewValidator\Model;
 
 class Validator
 {
@@ -9,24 +9,24 @@ class Validator
      */
     private $timezone;
     /**
-     * @var \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation
+     * @var \Bydn\ChatGpt\Model\ChatGpt\Moderation
      */
     private $chatGptModeration;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Helper\Config
+     * @var \Bydn\ChatGptReviewValidator\Helper\Config
      */
     private $chatGptReviewValidationConfig;
 
     /**
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
-     * @param \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
-     * @param \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
+     * @param \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
+     * @param \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
      */
     public function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
-        \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
-        \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
+        \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
+        \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
     ) {
         $this->timezone = $timezone;
         $this->chatGptModeration = $chatGptModeration;
@@ -145,7 +145,7 @@ class Validator
     {
         // Set new status and date
         $review->setGptStatus(
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
+            \Bydn\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
         );
         $review->setGptValidatedAt($this->timezone->date()->format('Y-m-d H:i:s'));
         $review->setGptExcludedForTraining(0);
@@ -153,11 +153,11 @@ class Validator
         // Iterate over results and set review data
         if (!empty($problems)) {
             $review->setGptResult(
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
+                \Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
             );
             $review->setGptProblems(implode(',', $problems));
         } else {
-            $review->setGptResult(\DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_OK);
+            $review->setGptResult(\Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_OK);
             $review->setGptProblems('');
         }
 
@@ -168,7 +168,7 @@ class Validator
         // Modify review status if needed
         if ($this->chatGptReviewValidationConfig->isAutoValidationEnabled()) {
             if ($review->getGptResult() ==
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
+                \Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_NOT_APPROVED);
             } else {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_APPROVED);

@@ -2,6 +2,6 @@
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'DanielNavarro_ChatGptReviewValidator',
+    'Bydn_ChatGptReviewValidator',
     __DIR__
 );

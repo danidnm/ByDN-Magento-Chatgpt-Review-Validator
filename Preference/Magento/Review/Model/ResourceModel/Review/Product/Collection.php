@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Preference\Magento\Review\Model\ResourceModel\Review\Product;
+namespace Bydn\ChatGptReviewValidator\Preference\Magento\Review\Model\ResourceModel\Review\Product;
 
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute;
 
