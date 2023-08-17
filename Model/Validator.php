@@ -19,26 +19,18 @@ class Validator
     private $chatGptReviewValidationConfig;
 
     /**
-     * @var \DanielNavarro\Logger\Model\LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
      * @param \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
      * @param \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
-     * @param \DanielNavarro\Logger\Model\LoggerInterface $logger
      */
     public function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
         \DanielNavarro\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
-        \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig,
-        \DanielNavarro\Logger\Model\LoggerInterface $logger
+        \DanielNavarro\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
     ) {
         $this->timezone = $timezone;
         $this->chatGptModeration = $chatGptModeration;
         $this->chatGptReviewValidationConfig = $chatGptReviewValidationConfig;
-        $this->logger = $logger;
     }
 
     /**
@@ -54,18 +46,11 @@ class Validator
             return [false, $review];
         }
 
-        // Log info
-        $this->logger->writeInfo(__METHOD__, __LINE__, 'Validating review ' . $review->getId());
-
         // Extract review info to be validated
         $fullText = $this->getInfoForValidation($review);
 
         // Validate with moderation model
         $result = $this->chatGptModeration->moderateText($fullText);
-
-//        // Log results
-//        $this->logger->writeInfo(__METHOD__, __LINE__, 'Results:');
-//        $this->logger->writeInfo(__METHOD__, __LINE__, $result);
 
         // If not ok, return the review as it is
         if (empty($result)) {
@@ -75,16 +60,8 @@ class Validator
         // Process scores
         $result = $this->processResultScores($result);
 
-//        // Log results
-//        $this->logger->writeInfo(__METHOD__, __LINE__, 'Processed results:');
-//        $this->logger->writeInfo(__METHOD__, __LINE__, $result);
-
         // Extract problems
         $problems = $this->extractProblems($result);
-
-//        // Log results
-//        $this->logger->writeInfo(__METHOD__, __LINE__, 'Problems found:');
-//        $this->logger->writeInfo(__METHOD__, __LINE__, $result);
 
         // Update review with the GPT processed info
         $review = $this->updateReview($review, $result, $problems);
