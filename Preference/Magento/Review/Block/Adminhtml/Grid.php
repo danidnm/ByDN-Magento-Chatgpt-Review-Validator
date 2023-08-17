@@ -1,6 +1,6 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Preference\Magento\Review\Block\Adminhtml;
+namespace Bydn\OpenAiReviewValidator\Preference\Magento\Review\Block\Adminhtml;
 
 class Grid extends \Magento\Review\Block\Adminhtml\Grid
 {
@@ -10,17 +10,17 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
     private $resourceConnection;
 
     /**
-     * @var \Bydn\ChatGptReviewValidator\Model\Source\Review\Status
+     * @var \Bydn\OpenAiReviewValidator\Model\Source\Review\Status
      */
-    private $gptStatus;
+    private $openAiStatus;
 
     /**
-     * @var \Bydn\ChatGptReviewValidator\Model\Source\Review\Result
+     * @var \Bydn\OpenAiReviewValidator\Model\Source\Review\Result
      */
-    private $gptResult;
+    private $openAiResult;
 
     /**
-     * Controls if the join with open ai table is already done
+     * Controls if the join with OpenAi table is already done
      * @var bool
      */
     private $joinAdded = false;
@@ -34,7 +34,7 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
      * @param \Magento\Review\Helper\Action\Pager $reviewActionPager
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\App\ResourceConnection $resourceConnection
-     * @param \Bydn\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus
+     * @param \Bydn\OpenAiReviewValidator\Model\Source\Review\Status $openAiStatus
      * @param array $data
      */
     public function __construct(
@@ -46,13 +46,13 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
         \Magento\Review\Helper\Action\Pager $reviewActionPager,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
-        \Bydn\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus,
-        \Bydn\ChatGptReviewValidator\Model\Source\Review\Result $gptResult,
+        \Bydn\OpenAiReviewValidator\Model\Source\Review\Status $openAiStatus,
+        \Bydn\OpenAiReviewValidator\Model\Source\Review\Result $openAiResult,
         array $data = []
     ) {
         $this->resourceConnection = $resourceConnection;
-        $this->gptStatus = $gptStatus;
-        $this->gptResult = $gptResult;
+        $this->openAiStatus = $openAiStatus;
+        $this->openAiResult = $openAiResult;
         parent::__construct(
             $context,
             $backendHelper,
@@ -74,12 +74,12 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
     public function setCollection($collection)
     {
         if (!$this->joinAdded) {
-            $gptTable = $this->resourceConnection->getTableName('dn_chatgpt_review_scores');
+            $openaiTable = $this->resourceConnection->getTableName('bydn_open_ai_review_scores');
 
             $collection->getSelect()->joinLeft(
-                ['gpt' => $gptTable],
-                'rt.review_id = gpt.gpt_review_id',
-                ['gpt_status', 'gpt_result']
+                ['openai' => $openaiTable],
+                'rt.review_id = openai.open_ai_review_id',
+                ['open_ai_status', 'open_ai_result']
             );
 
             $this->joinAdded = true;
@@ -103,28 +103,28 @@ class Grid extends \Magento\Review\Block\Adminhtml\Grid
 
         // Add Open AI status column
         $this->addColumnAfter(
-            'gpt_status',
+            'open_ai_status',
             [
                 'header' => __('OpenAI Status'),
                 'type' => 'options',
-                'options' => $this->gptStatus->toColumnOptionArray(),
-                'filter_index' => 'gpt.gpt_status',
-                'index' => 'gpt_status'
+                'options' => $this->openAiStatus->toColumnOptionArray(),
+                'filter_index' => 'openai.open_ai_status',
+                'index' => 'open_ai_status'
             ],
             $after
         );
 
         // Add Open AI status column
         $this->addColumnAfter(
-            'gpt_result',
+            'open_ai_result',
             [
                 'header' => __('OpenAI Result'),
                 'type' => 'options',
-                'options' => $this->gptResult->toColumnOptionArray(),
-                'filter_index' => 'gpt.gpt_result',
-                'index' => 'gpt_result'
+                'options' => $this->openAiResult->toColumnOptionArray(),
+                'filter_index' => 'openai.open_ai_result',
+                'index' => 'open_ai_result'
             ],
-            'gpt_status'
+            'open_ai_status'
         );
 
         parent::_prepareColumns();

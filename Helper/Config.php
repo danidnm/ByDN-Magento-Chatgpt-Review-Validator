@@ -1,24 +1,24 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Helper;
+namespace Bydn\OpenAiReviewValidator\Helper;
 
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    public const PATH_CHATGPT_REVIEW_VALIDATOR_ENABLE = 'bydn_chatgptreviewvalidator/general/enable';
-    public const PATH_CHATGPT_REVIEW_VALIDATOR_AUTO = 'bydn_chatgptreviewvalidator/general/auto_validation';
-    public const PATH_CHATGPT_REVIEW_SCORES_PATH = 'bydn_chatgptreviewvalidator/scores/';
+    public const PATH_OPENAI_REVIEW_VALIDATOR_ENABLE = 'bydn_openaireviewvalidator/general/enable';
+    public const PATH_OPENAI_REVIEW_VALIDATOR_AUTO = 'bydn_openaireviewvalidator/general/auto_validation';
+    public const PATH_OPENAI_REVIEW_SCORES_PATH = 'bydn_openaireviewvalidator/scores/';
 
     /**
      * List of moderation categories
      * @var array
      */
     private $categories = [
-        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_SEXUAL,
-        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_HATE,
-        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_HARASSMENT,
-        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_SELF_HARM,
-        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_THREATENING,
-        \Bydn\ChatGptReviewValidator\Model\Categories::CATEGORY_VIOLENCE,
+        \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_SEXUAL,
+        \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_HATE,
+        \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_HARASSMENT,
+        \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_SELF_HARM,
+        \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_THREATENING,
+        \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_VIOLENCE,
     ];
 
     /**
@@ -30,7 +30,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     public function isEnabled($store_id = null)
     {
         return $this->scopeConfig->getValue(
-            self::PATH_CHATGPT_REVIEW_VALIDATOR_ENABLE,
+            self::PATH_OPENAI_REVIEW_VALIDATOR_ENABLE,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $store_id
         );
@@ -47,7 +47,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     public function isAutoValidationEnabled($storeId = null)
     {
         return $this->scopeConfig->getValue(
-            self::PATH_CHATGPT_REVIEW_VALIDATOR_AUTO,
+            self::PATH_OPENAI_REVIEW_VALIDATOR_AUTO,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
         );
@@ -64,7 +64,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
         $data = [];
         foreach ($this->categories as $category) {
             $data[$category] = $this->scopeConfig->getValue(
-                self::PATH_CHATGPT_REVIEW_SCORES_PATH . $category,
+                self::PATH_OPENAI_REVIEW_SCORES_PATH . $category,
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $storeId
             );

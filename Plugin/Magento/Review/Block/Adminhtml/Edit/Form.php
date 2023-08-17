@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Plugin\Magento\Review\Block\Adminhtml\Edit;
+namespace Bydn\OpenAiReviewValidator\Plugin\Magento\Review\Block\Adminhtml\Edit;
 
 class Form
 {
@@ -10,19 +10,19 @@ class Form
     private $registry;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status
+     * @var \Bydn\OpenAiReviewValidator\Model\Source\Review\Status
      */
-    private $gptStatus;
+    private $openAiStatus;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result
+     * @var \Bydn\OpenAiReviewValidator\Model\Source\Review\Result
      */
-    private $gptResult;
+    private $openAiResult;
 
     /**
-     * @var \DanielNavarro\ChatGptReviewValidator\Model\Categories
+     * @var \Bydn\OpenAiReviewValidator\Model\Categories
      */
-    private $gptCategories;
+    private $openAiCategories;
 
     /**
      * @var \Magento\Review\Model\Review
@@ -31,20 +31,20 @@ class Form
 
     /**
      * @param \Magento\Framework\Registry $registry
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result $gptResult
-     * @param \DanielNavarro\ChatGptReviewValidator\Model\Categories $gptCategories
+     * @param \Bydn\OpenAiReviewValidator\Model\Source\Review\Status $openAiStatus
+     * @param \Bydn\OpenAiReviewValidator\Model\Source\Review\Result $openAiResult
+     * @param \Bydn\OpenAiReviewValidator\Model\Categories $openAiCategories
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
-        \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status $gptStatus,
-        \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result $gptResult,
-        \DanielNavarro\ChatGptReviewValidator\Model\Categories $gptCategories
+        \Magento\Framework\Registry                            $registry,
+        \Bydn\OpenAiReviewValidator\Model\Source\Review\Status $openAiStatus,
+        \Bydn\OpenAiReviewValidator\Model\Source\Review\Result $openAiResult,
+        \Bydn\OpenAiReviewValidator\Model\Categories $openAiCategories
     ) {
         $this->registry = $registry;
-        $this->gptStatus = $gptStatus;
-        $this->gptResult = $gptResult;
-        $this->gptCategories = $gptCategories;
+        $this->openAiStatus = $openAiStatus;
+        $this->openAiResult = $openAiResult;
+        $this->openAiCategories = $openAiCategories;
     }
 
     /**
@@ -61,7 +61,7 @@ class Form
         // Current review
         $this->currentReview = $this->registry->registry('review_data');
 
-        // Get the review fieldset if exist and add our custom block with GPT validation info
+        // Get the review fieldset if exist and add our custom block with OPENAI validation info
         $form = $form->getForm();
 
         // Add overall notice to the current actual status
@@ -69,36 +69,36 @@ class Form
         $this->addNotice($statusField);
 
         // If status is pending do not show anything else
-        if ($this->currentReview->getGptStatus() !=
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING) {
+        if ($this->currentReview->getOpenAiStatus() !=
+            \Bydn\OpenAiReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PENDING) {
 
             // New fieldset for validation data
             $fieldset = $form->addFieldset(
-                'review_gpt_validation',
+                'review_open_ai_validation',
                 ['legend' => __('OpenAI validation details'), 'class' => 'fieldset-wide']
             );
 
             // Result of the validation
-            $this->addGptResult($fieldset);
+            $this->addOpenAiResult($fieldset);
 
             // Only show problems and scores if processed
-            if ($this->currentReview->getGptResult() !=
-                \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING) {
+            if ($this->currentReview->getOpenAiResult() !=
+                \Bydn\OpenAiReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_PENDING) {
 
                 // Add validation date
-                $this->addGptValidationDate($fieldset);
+                $this->addOpenAiValidationDate($fieldset);
 
                 // Add problems
-                $this->addGptProblems($fieldset);
+                $this->addOpenAiProblems($fieldset);
 
                 // New fieldset for validation scores
                 $fieldset = $form->addFieldset(
-                    'review_gpt_scores',
+                    'review_open_ai_scores',
                     ['legend' => __('Result scores per category'), 'class' => 'fieldset-wide']
                 );
 
                 // Add scores
-                $this->addGptScores($fieldset);
+                $this->addOpenAiScores($fieldset);
             }
         }
 
@@ -106,7 +106,7 @@ class Form
     }
 
     /**
-     * Adds notice below the status field to indicate the admin about the GPT validation status
+     * Adds notice below the status field to indicate the admin about the OPENAI validation status
      *
      * @param \Magento\Framework\Data\Form\Element\AbstractElement $statusField
      * @return void
@@ -115,12 +115,12 @@ class Form
     {
 
         // Append result to the status field
-        if ($this->currentReview->getGptStatus() ==
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED) {
+        if ($this->currentReview->getOpenAiStatus() ==
+            \Bydn\OpenAiReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED) {
 
             $text = '&nbsp;&nbsp;<small>(' .
                 __('Automatic validation done at') . ' ' .
-                $this->currentReview->getGptValidatedAt() .
+                $this->currentReview->getOpenAiValidatedAt() .
                 ').&nbsp;<a href="#detail">' . __('See details') . '</a>.</small>';
             $statusField->setAfterElementHtml($text);
 
@@ -138,19 +138,19 @@ class Form
     }
 
     /**
-     * Add GPT status to the fieldset
+     * Add OPENAI status to the fieldset
      *
      * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptStatus(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    private function addOpenAiStatus(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
     {
         // Get status label
-        $statusText = $this->gptStatus->getLabel($this->currentReview->getGptStatus());
+        $statusText = $this->openAiStatus->getLabel($this->currentReview->getOpenAiStatus());
 
         // Add field
         $fieldset->addField(
-            'gpt_status',
+            'open_ai_status',
             'note',
             [
                 'label' => __('Validation status'),
@@ -160,23 +160,23 @@ class Form
     }
 
     /**
-     * Add GPT validation result to the fieldset
+     * Add OPENAI validation result to the fieldset
      *
      * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptResult(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    private function addOpenAiResult(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
     {
         // Get status label
-        $resultText = $this->gptResult->getLabel($this->currentReview->getGptResult());
-        if ($this->currentReview->getGptResult() ==
-            \DanielNavarro\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
+        $resultText = $this->openAiResult->getLabel($this->currentReview->getOpenAiResult());
+        if ($this->currentReview->getOpenAiResult() ==
+            \Bydn\OpenAiReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
             $resultText = '<span style="color: red;">' . $resultText . '</span>';
         }
 
         // Add field
         $fieldset->addField(
-            'gpt_result',
+            'open_ai_result',
             'note',
             [
                 'label' => __('Validation result'),
@@ -186,19 +186,19 @@ class Form
     }
 
     /**
-     * Add GPT validation date to the fieldset
+     * Add OPENAI validation date to the fieldset
      *
      * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptValidationDate(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    private function addOpenAiValidationDate(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
     {
         // Get status label
-        $validationDate = $this->currentReview->getGptValidatedAt();
+        $validationDate = $this->currentReview->getOpenAiValidatedAt();
 
         // Add field
         $fieldset->addField(
-            'gpt_validation_date',
+            'open_ai_validation_date',
             'note',
             [
                 'label' => __('Validation date'),
@@ -208,15 +208,15 @@ class Form
     }
 
     /**
-     * Add GPT problems to the fieldset
+     * Add OPENAI problems to the fieldset
      *
      * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptProblems(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    private function addOpenAiProblems(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
     {
         // Get formated problems or none
-        $problems = $this->currentReview->getGptProblems();
+        $problems = $this->currentReview->getOpenAiProblems();
         if (!empty($problems)) {
             $problems = explode(',', $problems);
             $problems = array_map('trim', $problems);
@@ -238,15 +238,15 @@ class Form
     }
 
     /**
-     * Add GPT scores to the fieldset
+     * Add OPENAI scores to the fieldset
      *
      * @param \Magento\Framework\Data\Form\Element\Fieldset $fieldset
      * @return void
      */
-    private function addGptScores(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
+    private function addOpenAiScores(\Magento\Framework\Data\Form\Element\Fieldset $fieldset)
     {
         // Get scores (json)
-        $scores = $this->currentReview->getGptScoreSummary();
+        $scores = $this->currentReview->getOpenAiScoreSummary();
         $scores = \json_decode($scores, true);
         if ($scores == null) {
             return;
@@ -259,7 +259,7 @@ class Form
         foreach ($categoryScores as $categoryScore => $data) {
 
             // Title and formated value
-            $title = $this->gptCategories->getLabel($categoryScore);
+            $title = $this->openAiCategories->getLabel($categoryScore);
             $score = $data['score'];
             $maxScore = $data['maxScore'];
             $flagged = ((double)$score > (double)$maxScore);

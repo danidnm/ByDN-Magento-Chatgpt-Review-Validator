@@ -2,11 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
 
     <!-- CRUD model for review extension -->
-    <preference for="Bydn\ChatGptReviewValidator\Api\Data\ReviewInterface" type="Bydn\ChatGptReviewValidator\Model\Review" />
+    <preference for="Bydn\OpenAiReviewValidator\Api\Data\ReviewInterface" type="Bydn\OpenAiReviewValidator\Model\Review" />
 
     <!-- Add information to the review form -->
     <type name="Magento\Review\Block\Adminhtml\Edit\Form">
-        <plugin name="DnGptRV_Review_Form" type="Bydn\ChatGptReviewValidator\Plugin\Magento\Review\Block\Adminhtml\Edit\Form" sortOrder="1" disabled="false" />
+        <plugin name="DnOpenAiRV_Review_Form" type="Bydn\OpenAiReviewValidator\Plugin\Magento\Review\Block\Adminhtml\Edit\Form" sortOrder="1" disabled="false" />
     </type>
 
 </config>

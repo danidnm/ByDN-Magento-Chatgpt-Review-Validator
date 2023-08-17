@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Model\ResourceModel;
+namespace Bydn\OpenAiReviewValidator\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
@@ -13,6 +13,6 @@ class Review extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('dn_chatgpt_review_scores', 'id');
+        $this->_init('bydn_open_ai_review_scores', 'id');
     }
 }

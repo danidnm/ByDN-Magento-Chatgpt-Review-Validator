@@ -1,6 +1,6 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Cron;
+namespace Bydn\OpenAiReviewValidator\Cron;
 
 use Magento\Review\Model\ResourceModel\Review\Collection;
 
@@ -17,43 +17,43 @@ class Validate
     private $reviewResource;
 
     /**
-     * @var \Bydn\ChatGpt\Model\ChatGpt\Moderation
+     * @var \Bydn\OpenAi\Model\OpenAi\Moderation
      */
-    private $chatGptModeration;
+    private $openAiModeration;
 
     /**
-     * @var \Bydn\ChatGptReviewValidator\Helper\Config
+     * @var \Bydn\OpenAiReviewValidator\Helper\Config
      */
-    private $chatGptReviewValidationConfig;
+    private $openAiReviewValidationConfig;
 
     /**
-     * @var \Bydn\ChatGptReviewValidator\Model\Validator
+     * @var \Bydn\OpenAiReviewValidator\Model\Validator
      */
     private $reviewValidator;
 
     /**
      * @param \Magento\Review\Model\ResourceModel\Review\CollectionFactory $reviewCollectionFactory
      * @param \Magento\Review\Model\ResourceModel\Review $reviewResource
-     * @param \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
-     * @param \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
-     * @param \Bydn\ChatGptReviewValidator\Model\Validator $reviewValidator
+     * @param \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration
+     * @param \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig
+     * @param \Bydn\OpenAiReviewValidator\Model\Validator $reviewValidator
      */
     public function __construct(
         \Magento\Review\Model\ResourceModel\Review\CollectionFactory $reviewCollectionFactory,
         \Magento\Review\Model\ResourceModel\Review $reviewResource,
-        \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
-        \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig,
-        \Bydn\ChatGptReviewValidator\Model\Validator $reviewValidator
+        \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration,
+        \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig,
+        \Bydn\OpenAiReviewValidator\Model\Validator $reviewValidator
     ) {
         $this->reviewCollectionFactory = $reviewCollectionFactory;
         $this->reviewResource = $reviewResource;
-        $this->chatGptModeration = $chatGptModeration;
-        $this->chatGptReviewValidationConfig = $chatGptReviewValidationConfig;
+        $this->openAiModeration = $openAiModeration;
+        $this->openAiReviewValidationConfig = $openAiReviewValidationConfig;
         $this->reviewValidator = $reviewValidator;
     }
 
     /**
-     * Process all the pending reviews and validates through ChatGpt
+     * Process all the pending reviews and validates through OpenAi
      *
      * @return void
      */

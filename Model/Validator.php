@@ -1,6 +1,6 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Model;
+namespace Bydn\OpenAiReviewValidator\Model;
 
 class Validator
 {
@@ -9,28 +9,28 @@ class Validator
      */
     private $timezone;
     /**
-     * @var \Bydn\ChatGpt\Model\ChatGpt\Moderation
+     * @var \Bydn\OpenAi\Model\OpenAi\Moderation
      */
-    private $chatGptModeration;
+    private $openAiModeration;
 
     /**
-     * @var \Bydn\ChatGptReviewValidator\Helper\Config
+     * @var \Bydn\OpenAiReviewValidator\Helper\Config
      */
-    private $chatGptReviewValidationConfig;
+    private $openAiReviewValidationConfig;
 
     /**
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
-     * @param \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration
-     * @param \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
+     * @param \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration
+     * @param \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig
      */
     public function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
-        \Bydn\ChatGpt\Model\ChatGpt\Moderation $chatGptModeration,
-        \Bydn\ChatGptReviewValidator\Helper\Config $chatGptReviewValidationConfig
+        \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration,
+        \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig
     ) {
         $this->timezone = $timezone;
-        $this->chatGptModeration = $chatGptModeration;
-        $this->chatGptReviewValidationConfig = $chatGptReviewValidationConfig;
+        $this->openAiModeration = $openAiModeration;
+        $this->openAiReviewValidationConfig = $openAiReviewValidationConfig;
     }
 
     /**
@@ -42,7 +42,7 @@ class Validator
     public function validateReview(\Magento\Review\Model\Review $review)
     {
         // Check if it is enabled
-        if (!$this->chatGptReviewValidationConfig->isEnabled()) {
+        if (!$this->openAiReviewValidationConfig->isEnabled()) {
             return [false, $review];
         }
 
@@ -50,7 +50,7 @@ class Validator
         $fullText = $this->getInfoForValidation($review);
 
         // Validate with moderation model
-        $result = $this->chatGptModeration->moderateText($fullText);
+        $result = $this->openAiModeration->moderateText($fullText);
 
         // If not ok, return the review as it is
         if (empty($result)) {
@@ -63,7 +63,7 @@ class Validator
         // Extract problems
         $problems = $this->extractProblems($result);
 
-        // Update review with the GPT processed info
+        // Update review with the OPENAI processed info
         $review = $this->updateReview($review, $result, $problems);
 
         // Return result
@@ -90,7 +90,7 @@ class Validator
     private function processResultScores(array $result)
     {
         // Allowed máximum scores
-        $maxScores = $this->chatGptReviewValidationConfig->getMaximumScores();
+        $maxScores = $this->openAiReviewValidationConfig->getMaximumScores();
 
         // Iterate over results and set review data
         foreach ($result['categories'] as $category => $score) {
@@ -144,31 +144,31 @@ class Validator
     private function updateReview(\Magento\Review\Model\Review $review, array $result, array $problems)
     {
         // Set new status and date
-        $review->setGptStatus(
-            \Bydn\ChatGptReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
+        $review->setOpenAiStatus(
+            \Bydn\OpenAiReviewValidator\Model\Source\Review\Status::REVIEW_STATUS_PROCESSED
         );
-        $review->setGptValidatedAt($this->timezone->date()->format('Y-m-d H:i:s'));
-        $review->setGptExcludedForTraining(0);
+        $review->setOpenAiValidatedAt($this->timezone->date()->format('Y-m-d H:i:s'));
+        $review->setOpenAiExcludedForTraining(0);
 
         // Iterate over results and set review data
         if (!empty($problems)) {
-            $review->setGptResult(
-                \Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
+            $review->setOpenAiResult(
+                \Bydn\OpenAiReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED
             );
-            $review->setGptProblems(implode(',', $problems));
+            $review->setOpenAiProblems(implode(',', $problems));
         } else {
-            $review->setGptResult(\Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_OK);
-            $review->setGptProblems('');
+            $review->setOpenAiResult(\Bydn\OpenAiReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_OK);
+            $review->setOpenAiProblems('');
         }
 
         // Add detailed data
         $result = \json_encode($result);
-        $review->setGptScoreSummary($result);
+        $review->setOpenAiScoreSummary($result);
 
         // Modify review status if needed
-        if ($this->chatGptReviewValidationConfig->isAutoValidationEnabled()) {
-            if ($review->getGptResult() ==
-                \Bydn\ChatGptReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
+        if ($this->openAiReviewValidationConfig->isAutoValidationEnabled()) {
+            if ($review->getOpenAiResult() ==
+                \Bydn\OpenAiReviewValidator\Model\Source\Review\Result::REVIEW_RESULT_FLAGGED) {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_NOT_APPROVED);
             } else {
                 $review->setStatusId(\Magento\Review\Model\Review::STATUS_APPROVED);

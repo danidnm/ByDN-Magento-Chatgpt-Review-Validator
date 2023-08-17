@@ -1,8 +1,8 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Model;
+namespace Bydn\OpenAiReviewValidator\Model;
 
-use DanielNavarro\ChatGptReviewValidator\Api\Data\ReviewInterface;
+use Bydn\OpenAiReviewValidator\Api\Data\ReviewInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
 
 class Review extends AbstractExtensibleModel implements ReviewInterface
@@ -14,7 +14,7 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      */
     protected function _construct()
     {
-        $this->_init(\DanielNavarro\ChatGptReviewValidator\Model\ResourceModel\Review::class);
+        $this->_init(\Bydn\OpenAiReviewValidator\Model\ResourceModel\Review::class);
         $this->setIdFieldName('id');
     }
 
@@ -33,9 +33,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return null|int
      */
-    public function getGptReviewId(): ?int
+    public function getOpenAiReviewId(): ?int
     {
-        return $this->getData(self::GPT_REVIEW_ID);
+        return $this->getData(self::OPENAI_REVIEW_ID);
     }
 
     /**
@@ -43,9 +43,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return string
      */
-    public function getGptStatus(): string
+    public function getOpenAiStatus(): string
     {
-        return $this->getData(self::GPT_STATUS);
+        return $this->getData(self::OPENAI_STATUS);
     }
 
     /**
@@ -53,9 +53,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return string|null
      */
-    public function getGptValidatedAt(): string|null
+    public function getOpenAiValidatedAt(): string|null
     {
-        return $this->getData(self::GPT_VALIDATED_AT);
+        return $this->getData(self::OPENAI_VALIDATED_AT);
     }
 
     /**
@@ -63,9 +63,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return string
      */
-    public function getGptResult(): string
+    public function getOpenAiResult(): string
     {
-        return $this->getData(self::GPT_RESULT);
+        return $this->getData(self::OPENAI_RESULT);
     }
 
     /**
@@ -73,9 +73,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return string|null
      */
-    public function getGptProblems(): string|null
+    public function getOpenAiProblems(): string|null
     {
-        return $this->getData(self::GPT_PROBLEMS);
+        return $this->getData(self::OPENAI_PROBLEMS);
     }
 
     /**
@@ -83,9 +83,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return string|null
      */
-    public function getGptScoreSummary(): string|null
+    public function getOpenAiScoreSummary(): string|null
     {
-        return $this->getData(self::GPT_SCORE_SUMMARY);
+        return $this->getData(self::OPENAI_SCORE_SUMMARY);
     }
 
     /**
@@ -93,9 +93,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      *
      * @return int|null
      */
-    public function getGptExcludedForTraining(): int
+    public function getOpenAiExcludedForTraining(): int
     {
-        return $this->getData(self::GPT_EXCLUDED_FOR_TRAINING);
+        return $this->getData(self::OPENAI_EXCLUDED_FOR_TRAINING);
     }
 
     /**
@@ -104,9 +104,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param int $reviewId
      * @return ReviewInterface
      */
-    public function setGptReviewId(int $reviewId): ReviewInterface
+    public function setOpenAiReviewId(int $reviewId): ReviewInterface
     {
-        return $this->setData(self::GPT_REVIEW_ID, $reviewId);
+        return $this->setData(self::OPENAI_REVIEW_ID, $reviewId);
     }
 
     /**
@@ -115,9 +115,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param string $status
      * @return ReviewInterface
      */
-    public function setGptStatus(string $status): ReviewInterface
+    public function setOpenAiStatus(string $status): ReviewInterface
     {
-        return $this->setData(self::GPT_STATUS, $status);
+        return $this->setData(self::OPENAI_STATUS, $status);
     }
 
     /**
@@ -126,9 +126,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param mixed $validatedAt
      * @return ReviewInterface
      */
-    public function setGptValidatedAt(mixed $validatedAt): ReviewInterface
+    public function setOpenAiValidatedAt(mixed $validatedAt): ReviewInterface
     {
-        return $this->setData(self::GPT_VALIDATED_AT, $validatedAt);
+        return $this->setData(self::OPENAI_VALIDATED_AT, $validatedAt);
     }
 
     /**
@@ -137,9 +137,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param string $result
      * @return ReviewInterface
      */
-    public function setGptResult(string $result): ReviewInterface
+    public function setOpenAiResult(string $result): ReviewInterface
     {
-        return $this->setData(self::GPT_RESULT, $result);
+        return $this->setData(self::OPENAI_RESULT, $result);
     }
 
     /**
@@ -148,9 +148,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param mixed $problems
      * @return ReviewInterface
      */
-    public function setGptProblems(mixed $problems): ReviewInterface
+    public function setOpenAiProblems(mixed $problems): ReviewInterface
     {
-        return $this->setData(self::GPT_PROBLEMS, $problems);
+        return $this->setData(self::OPENAI_PROBLEMS, $problems);
     }
 
     /**
@@ -159,9 +159,9 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param mixed $scoreSummary
      * @return ReviewInterface
      */
-    public function setGptScoreSummary(mixed $scoreSummary): ReviewInterface
+    public function setOpenAiScoreSummary(mixed $scoreSummary): ReviewInterface
     {
-        return $this->setData(self::GPT_SCORE_SUMMARY, $scoreSummary);
+        return $this->setData(self::OPENAI_SCORE_SUMMARY, $scoreSummary);
     }
 
     /**
@@ -170,8 +170,8 @@ class Review extends AbstractExtensibleModel implements ReviewInterface
      * @param int $excludedForTraining
      * @return ReviewInterface
      */
-    public function setGptExcludedForTraining(int $excludedForTraining): ReviewInterface
+    public function setOpenAiExcludedForTraining(int $excludedForTraining): ReviewInterface
     {
-        return $this->setData(self::GPT_EXCLUDED_FOR_TRAINING, $excludedForTraining);
+        return $this->setData(self::OPENAI_EXCLUDED_FOR_TRAINING, $excludedForTraining);
     }
 }

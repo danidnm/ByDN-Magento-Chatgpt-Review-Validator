@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
 
-    <table name="dn_chatgpt_review_scores" resource="default" engine="innodb" comment="Review scores">
+    <table name="bydn_open_ai_review_scores" resource="default" engine="innodb" comment="Review scores">
 
         <column xsi:type="bigint" name="id" identity="true" comment="Review ID" />
-        <column xsi:type="bigint" name="gpt_review_id" nullable="false" unsigned="true" comment="Review ID" />
-        <column xsi:type="varchar" name="gpt_status" nullable="false" length="64" comment="Status of the automatic validation" />
-        <column xsi:type="timestamp" name="gpt_validated_at" nullable="true" on_create="false" on_update="false" comment="Validation date" />
-        <column xsi:type="varchar" name="gpt_result" nullable="false" length="64" comment="Result of the automatic validation" />
-        <column xsi:type="varchar" name="gpt_problems" nullable="true" length="256" comment="Problems encountered with the review" />
-        <column xsi:type="text" name="gpt_score_summary" nullable="true" comment="Score summary" />
-        <column xsi:type="int" name="gpt_excluded_for_training" nullable="false" unsigned="true" default="0" comment="Review was validated manually" />
+        <column xsi:type="bigint" name="open_ai_review_id" nullable="false" unsigned="true" comment="Review ID" />
+        <column xsi:type="varchar" name="open_ai_status" nullable="false" length="64" comment="Status of the automatic validation" />
+        <column xsi:type="timestamp" name="open_ai_validated_at" nullable="true" on_create="false" on_update="false" comment="Validation date" />
+        <column xsi:type="varchar" name="open_ai_result" nullable="false" length="64" comment="Result of the automatic validation" />
+        <column xsi:type="varchar" name="open_ai_problems" nullable="true" length="256" comment="Problems encountered with the review" />
+        <column xsi:type="text" name="open_ai_score_summary" nullable="true" comment="Score summary" />
+        <column xsi:type="int" name="open_ai_excluded_for_training" nullable="false" unsigned="true" default="0" comment="Review was validated manually" />
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id" />
         </constraint>
-        <constraint xsi:type="unique" referenceId="DNGPTRS_REVIEW_ID">
-            <column name="gpt_review_id"/>
+        <constraint xsi:type="unique" referenceId="DNOPENAIRS_REVIEW_ID">
+            <column name="open_ai_review_id"/>
         </constraint>
 
-        <constraint xsi:type="foreign" referenceId="DN_CHATGPT_REVIEW_SCORES_REVIEW_ID_REVIEW_ID"
-                    table="dn_chatgpt_review_scores"
-                    column="gpt_review_id"
+        <constraint xsi:type="foreign" referenceId="BYDN_OPENAI_REVIEW_SCORES_REVIEW_ID_REVIEW_ID"
+                    table="bydn_open_ai_review_scores"
+                    column="open_ai_review_id"
                     referenceTable="review"
                     referenceColumn="review_id"
                     onDelete="CASCADE"/>

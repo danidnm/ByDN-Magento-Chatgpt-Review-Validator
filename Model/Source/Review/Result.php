@@ -1,6 +1,6 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Model\Source\Review;
+namespace Bydn\OpenAiReviewValidator\Model\Source\Review;
 
 class Result implements \Magento\Framework\Option\ArrayInterface
 {

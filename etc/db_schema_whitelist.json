@@ -1,14 +1,14 @@
 {
-    "dn_chatgpt_review_scores": {
+    "bydn_open_ai_review_scores": {
         "column": {
             "id":  true,
-            "gpt_review_id":  true,
-            "gpt_status":  true,
-            "gpt_validated_at": true,
-            "gpt_result": true,
-            "gpt_problems":  true,
-            "gpt_score_summary":  true,
-            "gpt_excluded_for_training": true
+            "open_ai_review_id":  true,
+            "open_ai_status":  true,
+            "open_ai_validated_at": true,
+            "open_ai_result": true,
+            "open_ai_problems":  true,
+            "open_ai_score_summary":  true,
+            "open_ai_excluded_for_training": true
         },
         "constraint": {
             "PRIMARY": true

@@ -4,9 +4,9 @@
 
     <!-- Events to load and save additional review data -->
     <event name="review_save_after">
-        <observer name="dngptrv_review_save_after" instance="DanielNavarro\ChatGptReviewValidator\Observer\Review\SaveAfter" />
+        <observer name="dnopenairv_review_save_after" instance="Bydn\OpenAiReviewValidator\Observer\Review\SaveAfter" />
     </event>
     <event name="review_load_after">
-        <observer name="dngptrv_review_load_after" instance="DanielNavarro\ChatGptReviewValidator\Observer\Review\LoadAfter" />
+        <observer name="dnopenairv_review_load_after" instance="Bydn\OpenAiReviewValidator\Observer\Review\LoadAfter" />
     </event>
 </config>

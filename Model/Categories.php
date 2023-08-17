@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielNavarro\ChatGptReviewValidator\Model;
+namespace Bydn\OpenAiReviewValidator\Model;
 
 class Categories implements \Magento\Framework\Data\OptionSourceInterface
 {

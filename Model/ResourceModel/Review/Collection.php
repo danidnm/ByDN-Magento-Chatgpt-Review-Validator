@@ -1,6 +1,6 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Model\ResourceModel\Review;
+namespace Bydn\OpenAiReviewValidator\Model\ResourceModel\Review;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
@@ -14,8 +14,8 @@ class Collection extends AbstractCollection
     protected function _construct()
     {
         $this->_init(
-            \Bydn\ChatGptReviewValidator\Model\Review::class,
-            \Bydn\ChatGptReviewValidator\Model\ResourceModel\Review::class
+            \Bydn\OpenAiReviewValidator\Model\Review::class,
+            \Bydn\OpenAiReviewValidator\Model\ResourceModel\Review::class
         );
     }
 }

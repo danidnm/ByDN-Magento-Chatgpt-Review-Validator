@@ -2,6 +2,6 @@
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Bydn_ChatGptReviewValidator',
+    'Bydn_OpenAiReviewValidator',
     __DIR__
 );

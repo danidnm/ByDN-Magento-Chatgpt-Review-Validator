@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
-    <group id="chatgpt-review-validator">
-        <job name="chatgpt_review_validator" instance="Bydn\ChatGptReviewValidator\Cron\Validate" method="process">
+    <group id="openai-review-validator">
+        <job name="openai_review_validator" instance="Bydn\OpenAiReviewValidator\Cron\Validate" method="process">
             <schedule>*/5 * * * *</schedule>
         </job>
     </group>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bydn\ChatGptReviewValidator\Preference\Magento\Review\Model\ResourceModel\Review\Product;
+namespace Bydn\OpenAiReviewValidator\Preference\Magento\Review\Model\ResourceModel\Review\Product;
 
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute;
 
@@ -22,8 +22,8 @@ class Collection extends \Magento\Review\Model\ResourceModel\Review\Product\Coll
             case 'rdt.title':
             case 'rdt.nickname':
             case 'rdt.detail':
-            case 'gpt.gpt_status':      // Added to core function
-            case 'gpt.gpt_result':      // Added to core function
+            case 'openai.open_ai_status':      // Added to core function
+            case 'openai.open_ai_result':      // Added to core function
                 $this->getSelect()->order($attribute . ' ' . $dir);
                 break;
             case 'stores':
@@ -57,8 +57,8 @@ class Collection extends \Magento\Review\Model\ResourceModel\Review\Product\Coll
             case 'rdt.title':
             case 'rdt.nickname':
             case 'rdt.detail':
-            case 'gpt.gpt_status':      // Added to core function
-            case 'gpt.gpt_result':      // Added to core function
+            case 'openai.open_ai_status':      // Added to core function
+            case 'openai.open_ai_result':      // Added to core function
                 $conditionSql = $this->_getConditionSql($attribute, $condition);
                 $this->getSelect()->where($conditionSql);
                 break;
