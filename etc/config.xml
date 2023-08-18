@@ -5,14 +5,20 @@
             <general>
                 <enable>0</enable>
             </general>
-            <scores>
+            <language>
                 <sexual>25</sexual>
                 <hate>25</hate>
                 <harassment>25</harassment>
                 <selfharm>25</selfharm>
                 <threatening>25</threatening>
                 <violence>25</violence>
-            </scores>
+            </language>
+            <spam>
+                <threshold>25</threshold>
+            </spam>
+            <unrelated>
+                <threshold>25</threshold>
+            </unrelated>
         </bydn_openaireviewvalidator>
     </default>
 </config>

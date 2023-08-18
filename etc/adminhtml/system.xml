@@ -17,8 +17,13 @@
                     <comment>If set to No, the reviews are processed by OpenAI but not auto updated to Approved or Rejected status</comment>
                 </field>
 s            </group>
-            <group id="scores" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Validations Scores</label>
+            <group id="language" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Abusive language check</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable this check</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, the extension will look for abusive languages in the categories sexual, hate, harassment, self-harm, threatening and violence</comment>
+                </field>
                 <field id="additional_comment" translate="label comment" type="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label><![CDATA[<strong>How validation scores work</strong>]]></label>
                     <comment><![CDATA[<p>For each category below, introduce a number between 0 and 100, meaning:</p>
@@ -27,24 +32,82 @@ s            </group>
                         <p>(For most ecommerce, values between 20 and 30 are recommended)</p>
                     ]]></comment>
                     <frontend_model>Magento\Analytics\Block\Adminhtml\System\Config\AdditionalComment</frontend_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="sexual" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Sexual maximum score</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="hate" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Hate maximum score</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="harassment" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Harassment maximum score</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="selfharm" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Self-harm maximum score</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="threatening" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Threatening maximum score</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="violence" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Violence maximum score</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="spam" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Spam check</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable this check</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, the extension will look for spam text</comment>
+                </field>
+                <field id="threshold" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Spam maximum score</label>
+                    <comment>Introduce a number between 0 and 100 to configure how strong the validation will be (0 means strongest validation, 100 means the highest tolerance)</comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="unrelated" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Related to product and company check</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable this check</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, the extension will check if the review text is related to the product being reviewed and or your brand</comment>
+                </field>
+                <field id="text" translate="label" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text to match with</label>
+                    <comment>Introduce a text describing how do you want to validate the review content. Use the placeholder [PRODUCT_NAME] to use the product name wherever you want.</comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="threshold" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Unrelated maximum score</label>
+                    <comment>Introduce a number between 0 and 100 to configure how strong the validation will be (0 means strongest validation, so the content must be super related to your brand or your product, 100 means the highest tolerance). </comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
             </group>
         </section>

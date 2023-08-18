@@ -6,13 +6,19 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
     public const PATH_OPENAI_REVIEW_VALIDATOR_ENABLE = 'bydn_openaireviewvalidator/general/enable';
     public const PATH_OPENAI_REVIEW_VALIDATOR_AUTO = 'bydn_openaireviewvalidator/general/auto_validation';
-    public const PATH_OPENAI_REVIEW_SCORES_PATH = 'bydn_openaireviewvalidator/scores/';
+    public const PATH_OPENAI_REVIEW_LANGUAGE_ENABLE = 'bydn_openaireviewvalidator/language/enable';
+    public const PATH_OPENAI_REVIEW_LANGUAGE_CATEGORIES = 'bydn_openaireviewvalidator/language/';
+    public const PATH_OPENAI_REVIEW_SPAM_ENABLE = 'bydn_openaireviewvalidator/spam/enable';
+    public const PATH_OPENAI_REVIEW_SPAM_THRESHOLD = 'bydn_openaireviewvalidator/spam/threshold';
+    public const PATH_OPENAI_REVIEW_UNRELATED_ENABLE = 'bydn_openaireviewvalidator/unrelated/enable';
+    public const PATH_OPENAI_REVIEW_UNRELATED_TEXT = 'bydn_openaireviewvalidator/text';
+    public const PATH_OPENAI_REVIEW_UNRELATED_THRESHOLD = 'bydn_openaireviewvalidator/threshold';
 
     /**
      * List of moderation categories
      * @var array
      */
-    private $categories = [
+    private $languageCategories = [
         \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_SEXUAL,
         \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_HATE,
         \Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_HARASSMENT,
@@ -33,6 +39,66 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
             self::PATH_OPENAI_REVIEW_VALIDATOR_ENABLE,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $store_id
+        );
+    }
+
+    /**
+     * Returns if validation for abusive language is enabled
+     *
+     * @param int|null|string $storeId
+     * @return mixed
+     */
+    public function isLanguageValidationEnabled($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_LANGUAGE_ENABLE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * Returns if validation for abusive language is enabled
+     *
+     * @param int|null|string $storeId
+     * @return mixed
+     */
+    public function isSpamValidationEnabled($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_SPAM_ENABLE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * Returns if validation for abusive language is enabled
+     *
+     * @param int|null|string $storeId
+     * @return mixed
+     */
+    public function isUnrelatedValidationEnabled($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_UNRELATED_ENABLE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * Returns the text to be used for validation of unrelated content
+     *
+     * @param int|null|string $storeId
+     * @return mixed
+     */
+    public function getUnrelatedTextToMatchWith($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_UNRELATED_TEXT,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
         );
     }
 
@@ -62,13 +128,30 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     public function getMaximumScores($storeId = null)
     {
         $data = [];
-        foreach ($this->categories as $category) {
+
+        // Language categories
+        foreach ($this->languageCategories as $category) {
             $data[$category] = $this->scopeConfig->getValue(
-                self::PATH_OPENAI_REVIEW_SCORES_PATH . $category,
+                self::PATH_OPENAI_REVIEW_LANGUAGE_CATEGORIES . $category,
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $storeId
             );
         }
+
+        // Spam
+        $data['spam'] = $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_SPAM_THRESHOLD,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        // Unrelated
+        $data['unrelated'] = $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_UNRELATED_THRESHOLD,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
         return $data;
     }
 }
