@@ -97,7 +97,7 @@ s            </group>
                 </field>
                 <field id="text" translate="label" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Text to match with</label>
-                    <comment>Introduce a text describing how do you want to validate the review content. Use the placeholder [PRODUCT_NAME] to use the product name wherever you want.</comment>
+                    <comment>Introduce a text describing how do you want to validate the review content. Use the placeholder #PRODUCT_NAME# to use the product name wherever you want and #REVIEW_TEXT# where you want to include the review text.</comment>
                     <depends>
                         <field id="enable">1</field>
                     </depends>

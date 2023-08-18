@@ -8,6 +8,17 @@ class Validator
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
     private $timezone;
+
+    /**
+     * @var \Magento\Catalog\Model\ResourceModel\Product
+     */
+    private $productResourceModel;
+
+    /**
+     * @var \Magento\Catalog\Model\ProductFactory
+     */
+    private $productFactory;
+
     /**
      * @var \Bydn\OpenAi\Model\OpenAi\Moderation
      */
@@ -24,17 +35,31 @@ class Validator
     private $openAiReviewValidationConfig;
 
     /**
+     * Cache of loaded products
+     *
+     * @var array
+     */
+    private $productCache = [];
+
+    /**
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
+     * @param \Magento\Catalog\Model\ResourceModel\Product $productResourceModel
+     * @param \Magento\Catalog\Model\ProductFactory $productFactory
      * @param \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration
+     * @param \Bydn\OpenAi\Model\OpenAi\Completions $openAiCompletions
      * @param \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig
      */
     public function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
+        \Magento\Catalog\Model\ResourceModel\Product $productResourceModel,
+        \Magento\Catalog\Model\ProductFactory $productFactory,
         \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration,
         \Bydn\OpenAi\Model\OpenAi\Completions $openAiCompletions,
         \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig
     ) {
         $this->timezone = $timezone;
+        $this->productResourceModel = $productResourceModel;
+        $this->productFactory = $productFactory;
         $this->openAiModeration = $openAiModeration;
         $this->openAiCompletions = $openAiCompletions;
         $this->openAiReviewValidationConfig = $openAiReviewValidationConfig;
@@ -156,12 +181,29 @@ class Validator
         // Result to be returned
         $result = [];
 
+        // Only products
+        if ($review->getEntityId() != '1') {
+            return $review;
+        }
+
+        // Find the product if not already loaded
+        $productId = $review->getEntityPkValue();
+        if (!isset($this->productCache[$productId])) {
+            $product = $this->productFactory->create();
+            $this->productResourceModel->load($product, $productId);
+            $this->productCache[$productId] = $product;
+        }
+
+        // Extract name
+        $productName = $this->productCache[$productId]->getName();
+
         // Extract review info to be validated
         $reviewText = $this->getInfoForValidation($review);
 
         // Form the text to be sent to the assistant
         $fullText = $this->openAiReviewValidationConfig->getUnrelatedTextToMatchWith();
-        $fullText = str_replace('[REVIEW_TEXT]', $reviewText, $fullText);
+        $fullText = str_replace('#REVIEW_TEXT#', $reviewText, $fullText);
+        $fullText = str_replace('#PRODUCT_NAME#', $productName, $fullText);
 
         // Use completions API to ask for a score between 0-100
         $score = $this->openAiCompletions->sendNewChatMessage($fullText);
