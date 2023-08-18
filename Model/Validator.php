@@ -14,6 +14,11 @@ class Validator
     private $openAiModeration;
 
     /**
+     * @var \Bydn\OpenAi\Model\OpenAi\Completions
+     */
+    private $openAiCompletions;
+
+    /**
      * @var \Bydn\OpenAiReviewValidator\Helper\Config
      */
     private $openAiReviewValidationConfig;
@@ -26,10 +31,12 @@ class Validator
     public function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
         \Bydn\OpenAi\Model\OpenAi\Moderation $openAiModeration,
+        \Bydn\OpenAi\Model\OpenAi\Completions $openAiCompletions,
         \Bydn\OpenAiReviewValidator\Helper\Config $openAiReviewValidationConfig
     ) {
         $this->timezone = $timezone;
         $this->openAiModeration = $openAiModeration;
+        $this->openAiCompletions = $openAiCompletions;
         $this->openAiReviewValidationConfig = $openAiReviewValidationConfig;
     }
 
@@ -46,16 +53,43 @@ class Validator
             return [false, $review];
         }
 
-        // Extract review info to be validated
-        $fullText = $this->getInfoForValidation($review);
+        // Validate language if enabled
+        $languageResult = [];
+        if ($this->openAiReviewValidationConfig->isLanguageValidationEnabled()) {
+            $languageResult = $this->validateLanguage($review);
+            if (empty($languageResult)) {
+                return [false, $review];
+            }
 
-        // Validate with moderation model
-        $result = $this->openAiModeration->moderateText($fullText);
+        }
 
-        // If not ok, return the review as it is
-        if (empty($result)) {
+        // Validate spam if enabled
+        $spamResult = [];
+        if ($this->openAiReviewValidationConfig->isSpamValidationEnabled()) {
+            $spamResult = $this->validateSpam($review);
+            if (empty($spamResult)) {
+                return [false, $review];
+            }
+
+        }
+
+        // Validate unrelated if enabled
+        $unrelatedResult = [];
+        if ($this->openAiReviewValidationConfig->isUnrelatedValidationEnabled()) {
+            $unrelatedResult = $this->validateUnrelated($review);
+            if (empty($unrelatedResult)) {
+                return [false, $review];
+            }
+
+        }
+
+        // Should be any results
+        if (empty($languageResult) && empty($spamResult) && empty($unrelatedResult)) {
             return [false, $review];
         }
+
+        // Merge all the results
+        $result = array_merge_recursive($languageResult, $spamResult, $unrelatedResult);
 
         // Process scores
         $result = $this->processResultScores($result);
@@ -68,6 +102,47 @@ class Validator
 
         // Return result
         return [true, $review];
+    }
+
+    /**
+     * Calls OpenAI API to look for abusive language
+     *
+     * @param \Magento\Review\Model\Review $review
+     * @return array|mixed
+     */
+    private function validateLanguage(\Magento\Review\Model\Review $review) {
+
+        // Extract review info to be validated
+        $fullText = $this->getInfoForValidation($review);
+
+        // Validate with moderation model
+        return $this->openAiModeration->moderateText($fullText);
+    }
+
+    /**
+     * Calls OpenAI API to look for spam language
+     *
+     * @param \Magento\Review\Model\Review $review
+     * @return array|mixed
+     */
+    private function validateSpam(\Magento\Review\Model\Review $review) {
+        $result = [];
+        $result['categories']['spam'] = 0.1;
+        return $result;
+    }
+
+
+
+    /**
+     * Calls OpenAI API to look for unrelated language
+     *
+     * @param \Magento\Review\Model\Review $review
+     * @return array|mixed
+     */
+    private function validateUnrelated(\Magento\Review\Model\Review $review) {
+        $result = [];
+        $result['categories']['unrelated'] = 0.5;
+        return $result;
     }
 
     /**

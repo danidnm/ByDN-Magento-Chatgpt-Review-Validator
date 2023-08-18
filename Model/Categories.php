@@ -10,6 +10,8 @@ class Categories implements \Magento\Framework\Data\OptionSourceInterface
     public const CATEGORY_SELF_HARM = 'selfharm';
     public const CATEGORY_THREATENING = 'threatening';
     public const CATEGORY_VIOLENCE = 'violence';
+    public const CATEGORY_SPAM = 'spam';
+    public const CATEGORY_UNRELATED = 'unrelated';
 
     /**
      * Assign category name for each moderation category
@@ -22,6 +24,8 @@ class Categories implements \Magento\Framework\Data\OptionSourceInterface
         self::CATEGORY_SELF_HARM => 'Self-harm',
         self::CATEGORY_THREATENING => 'Threatening',
         self::CATEGORY_VIOLENCE => 'Violence',
+        self::CATEGORY_SPAM => 'Spam',
+        self::CATEGORY_UNRELATED => 'Unrelated',
     ];
 
     /**
@@ -55,6 +59,14 @@ class Categories implements \Magento\Framework\Data\OptionSourceInterface
             [
                 'label' => __($this->labels[self::CATEGORY_VIOLENCE]),
                 self::CATEGORY_VIOLENCE,
+            ],
+            [
+                'label' => __($this->labels[self::CATEGORY_SPAM]),
+                self::CATEGORY_SPAM,
+            ],
+            [
+                'label' => __($this->labels[self::CATEGORY_UNRELATED]),
+                self::CATEGORY_UNRELATED,
             ],
         ];
     }

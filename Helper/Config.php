@@ -11,8 +11,8 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     public const PATH_OPENAI_REVIEW_SPAM_ENABLE = 'bydn_openaireviewvalidator/spam/enable';
     public const PATH_OPENAI_REVIEW_SPAM_THRESHOLD = 'bydn_openaireviewvalidator/spam/threshold';
     public const PATH_OPENAI_REVIEW_UNRELATED_ENABLE = 'bydn_openaireviewvalidator/unrelated/enable';
-    public const PATH_OPENAI_REVIEW_UNRELATED_TEXT = 'bydn_openaireviewvalidator/text';
-    public const PATH_OPENAI_REVIEW_UNRELATED_THRESHOLD = 'bydn_openaireviewvalidator/threshold';
+    public const PATH_OPENAI_REVIEW_UNRELATED_TEXT = 'bydn_openaireviewvalidator/unrelated/text';
+    public const PATH_OPENAI_REVIEW_UNRELATED_THRESHOLD = 'bydn_openaireviewvalidator/unrelated/threshold';
 
     /**
      * List of moderation categories
@@ -139,14 +139,14 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         // Spam
-        $data['spam'] = $this->scopeConfig->getValue(
+        $data[\Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_SPAM] = $this->scopeConfig->getValue(
             self::PATH_OPENAI_REVIEW_SPAM_THRESHOLD,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
         );
 
         // Unrelated
-        $data['unrelated'] = $this->scopeConfig->getValue(
+        $data[\Bydn\OpenAiReviewValidator\Model\Categories::CATEGORY_UNRELATED] = $this->scopeConfig->getValue(
             self::PATH_OPENAI_REVIEW_UNRELATED_THRESHOLD,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
