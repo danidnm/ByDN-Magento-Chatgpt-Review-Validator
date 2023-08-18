@@ -9,6 +9,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     public const PATH_OPENAI_REVIEW_LANGUAGE_ENABLE = 'bydn_openaireviewvalidator/language/enable';
     public const PATH_OPENAI_REVIEW_LANGUAGE_CATEGORIES = 'bydn_openaireviewvalidator/language/';
     public const PATH_OPENAI_REVIEW_SPAM_ENABLE = 'bydn_openaireviewvalidator/spam/enable';
+    public const PATH_OPENAI_REVIEW_SPAM_TEXT = 'bydn_openaireviewvalidator/spam/text';
     public const PATH_OPENAI_REVIEW_SPAM_THRESHOLD = 'bydn_openaireviewvalidator/spam/threshold';
     public const PATH_OPENAI_REVIEW_UNRELATED_ENABLE = 'bydn_openaireviewvalidator/unrelated/enable';
     public const PATH_OPENAI_REVIEW_UNRELATED_TEXT = 'bydn_openaireviewvalidator/unrelated/text';
@@ -67,6 +68,21 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->scopeConfig->getValue(
             self::PATH_OPENAI_REVIEW_SPAM_ENABLE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * Returns the text to be used for validation of spam content
+     *
+     * @param int|null|string $storeId
+     * @return mixed
+     */
+    public function getSpamTextIntro($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::PATH_OPENAI_REVIEW_SPAM_TEXT,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
         );

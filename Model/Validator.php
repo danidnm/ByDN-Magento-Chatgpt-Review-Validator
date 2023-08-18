@@ -110,8 +110,8 @@ class Validator
      * @param \Magento\Review\Model\Review $review
      * @return array|mixed
      */
-    private function validateLanguage(\Magento\Review\Model\Review $review) {
-
+    private function validateLanguage(\Magento\Review\Model\Review $review)
+    {
         // Extract review info to be validated
         $fullText = $this->getInfoForValidation($review);
 
@@ -125,13 +125,25 @@ class Validator
      * @param \Magento\Review\Model\Review $review
      * @return array|mixed
      */
-    private function validateSpam(\Magento\Review\Model\Review $review) {
+    private function validateSpam(\Magento\Review\Model\Review $review)
+    {
+        // Result to be returned
         $result = [];
-        $result['categories']['spam'] = 0.1;
+
+        // Form the text to be sent to the assistant
+        $fullText = $this->openAiReviewValidationConfig->getSpamTextIntro() . ' ' .
+            $this->getInfoForValidation($review);
+
+        // Use completions API to ask for a score between 0-100
+        $score = $this->openAiCompletions->sendNewChatMessage($fullText);
+
+        // Check is a number
+        if (is_numeric($score)) {
+            $result['categories']['spam'] = $score / 100;
+        }
+
         return $result;
     }
-
-
 
     /**
      * Calls OpenAI API to look for unrelated language
@@ -139,9 +151,26 @@ class Validator
      * @param \Magento\Review\Model\Review $review
      * @return array|mixed
      */
-    private function validateUnrelated(\Magento\Review\Model\Review $review) {
+    private function validateUnrelated(\Magento\Review\Model\Review $review)
+    {
+        // Result to be returned
         $result = [];
-        $result['categories']['unrelated'] = 0.5;
+
+        // Extract review info to be validated
+        $reviewText = $this->getInfoForValidation($review);
+
+        // Form the text to be sent to the assistant
+        $fullText = $this->openAiReviewValidationConfig->getUnrelatedTextToMatchWith();
+        $fullText = str_replace('[REVIEW_TEXT]', $reviewText, $fullText);
+
+        // Use completions API to ask for a score between 0-100
+        $score = $this->openAiCompletions->sendNewChatMessage($fullText);
+
+        // Check is a number
+        if (is_numeric($score)) {
+            $result['categories']['unrelated'] = $score / 100;
+        }
+
         return $result;
     }
 
