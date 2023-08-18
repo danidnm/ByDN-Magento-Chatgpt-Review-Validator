@@ -14,10 +14,24 @@
                 <violence>25</violence>
             </language>
             <spam>
-                <text><![CDATA[The following text that was placed as a product review in an ecommerce. Please analyze the text and give me a score between 0 and 100, considering that 0 means the text is not spam at all, and 100 means the text has the highest probability to be spam. Please answer only with the number and no additional text. The text to be analyzed is: ]]></text>
+                <text><![CDATA[The following text that was placed as a product review in an ecommerce.
+
+                Please analyze the text and give me a score between 0 and 100, considering that 0 means the text is not spam at all, and 100 means the text has the highest probability to be spam.
+
+                Please answer only with the number and no additional text.
+
+                The text to be analyzed is: ]]></text>
                 <threshold>25</threshold>
             </spam>
             <unrelated>
+                <text><![CDATA[The following text that was placed as a product review in an ecommerce.
+                    Please analyze the text and give me a score between 0 and 100, considering that 0 means the text looks like a review for a product in an ecommerce and 100 means the text is not related at all with a product review. The product being reviewed is  called #PRODUCT_NAME#.
+
+                    Please answer only with the number and no additional text.
+
+                    The text to analyze is this:
+
+                    #REVIEW_TEXT#: ]]></text>
                 <threshold>25</threshold>
             </unrelated>
         </bydn_openaireviewvalidator>
