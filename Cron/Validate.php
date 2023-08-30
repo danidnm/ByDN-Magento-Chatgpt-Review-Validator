@@ -89,6 +89,7 @@ class Validate
         $collection = $this->reviewCollectionFactory->create();
         $collection->addFieldToSelect('review_id');
         $collection->addFieldToFilter('status_id', \Magento\Review\Model\Review::STATUS_PENDING);
+        $collection->getSelect()->limit(50);
 
         return $collection;
     }
