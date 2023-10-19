@@ -6,7 +6,7 @@
         <column xsi:type="bigint" name="id" identity="true" comment="Review ID" />
         <column xsi:type="bigint" name="open_ai_review_id" nullable="false" unsigned="true" comment="Review ID" />
         <column xsi:type="varchar" name="open_ai_status" nullable="false" length="64" comment="Status of the automatic validation" />
-        <column xsi:type="timestamp" name="open_ai_validated_at" nullable="true" on_create="false" on_update="false" comment="Validation date" />
+        <column xsi:type="timestamp" name="open_ai_validated_at" nullable="true" on_update="false" default="NULL" comment="Validation date" />
         <column xsi:type="varchar" name="open_ai_result" nullable="false" length="64" comment="Result of the automatic validation" />
         <column xsi:type="varchar" name="open_ai_problems" nullable="true" length="256" comment="Problems encountered with the review" />
         <column xsi:type="text" name="open_ai_score_summary" nullable="true" comment="Score summary" />
