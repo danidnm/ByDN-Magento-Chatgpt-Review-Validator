@@ -16,7 +16,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to No, the reviews are processed by OpenAI but not auto updated to Approved or Rejected status</comment>
                 </field>
-s            </group>
+            </group>
             <group id="language" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Abusive language check</label>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
