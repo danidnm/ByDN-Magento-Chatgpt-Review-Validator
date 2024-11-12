@@ -28,13 +28,13 @@ To obtain your API key, go to https://platform.openai.com/ and sign in into your
 
 Then, go to your profile menu and select View API keys (please note than this menu can change over time):
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/1-openai-account.png" />
 
 Create a new API by clicking the button “Create new secret key” and give it a name when asked.
 
 Important: Copy your keys and save it in a secure place as you will not be able to see your key again after.
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/2-opena-api-keyi.png" />
 
 IMPORTANT: As of the release of this guide, OpenAI is offering the moderation API for free. This means you won't incur any charges from OpenAI for using it. However, this could change in the future. Stay updated by checking OpenAI's pricing page at: https://openai.com/pricing
 
@@ -42,7 +42,7 @@ IMPORTANT: As of the release of this guide, OpenAI is offering the moderation AP
 
 Access the configuration of the base extension going to Stores => Configuration => AI Extensions (by DN). Enable de API usage and paste the API you get on the previous section:
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/3-configuration.png" />
 
 Once you have enabled the OpenAI integration and set your API Key, go to Open AI Review Validator (again inside Stores => Configuration => AI Extensions (by DN)) to configure your Review Validation.
 
@@ -50,7 +50,7 @@ Once you have enabled the OpenAI integration and set your API Key, go to Open AI
 
 First, in the General section, configure the behavior of the extension:
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/4-configuration.png" />
 
 **OpenAI Review Validator Enabled**. Turn this option on to start validating reviews against the OpenAI moderation API.
 
@@ -65,7 +65,7 @@ Remember that you can always manually change the status of any review, regardles
 
 In this section you can enable and configure language analysis.
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/5-configuration.png" />
 
 The lower is the threshold score for each category, the softer is the validation. 
 
@@ -79,7 +79,7 @@ We recommend starting with the preconfigured levels and then fine-tune the thres
 
 In this section you can enable Spam analysis
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/6-configuration.png" />
 
 The threshold acts the same way that explained before. 0 means strongest validation, so less spam expected to be validated. 100 means spam detection would be almost disabled. Recommended starting value is 75.
 
@@ -87,7 +87,7 @@ The threshold acts the same way that explained before. 0 means strongest validat
 
 In this section you can enable an additional validation to know if the review is related to the product being reviewed or at least it seems a product review.
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/7-configuration.png" />
 
 First configuration text is the template that is sent to OpenAI API to ask about the likeness of the text to a product review. You can use a placeholder to include your product name, so the check is more related to the product.
 
@@ -99,11 +99,11 @@ Once you configure the extension, give some time to the extension to start valid
 
 Then go to Marketing Reviews => All Reviews and you will start seeing the validation results.
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/8-configuration.png" />
 
 Go into any review to see the validation details:
 
-IMAGE
+<img src="https://github.com/danidnm/ByDN-Magento-Chatgpt-Review-Validator/blob/master/docs/9-configuration.png" />
 
 # Having problems
 
